@@ -1,114 +1,115 @@
-﻿using System.ComponentModel;
+﻿using AppEmpresa.Utils.Attributes;
+using System.ComponentModel;
 
 namespace AppEmpresa.Domain.Enums
 {
     public enum State
     {
-        //AC
+        [Code("AC")]
         [Description("Acre")]
         Acre,
 
-        //AL
+        [Code("AL")]
         [Description("Alagoas")]
         Alagoas,
 
-        //AP
+        [Code("AP")]
         [Description("Amapá")]
         Amapa,
 
-        //AM
+        [Code("AM")]
         [Description("Amazonas")]
         Amazonas,
 
-        //BA
+        [Code("BA")]
         [Description("Bahia")]
         Bahia,
 
-        //CE
+        [Code("CE")]
         [Description("Ceará")]
         Ceara,
 
-        //ES
+        [Code("ES")]
         [Description("Espírito Santo")]
         EspiritoSanto,
 
-        //GO
+        [Code("GO")]
         [Description("Goiás")]
         Goias,
 
-        //MA
+        [Code("MA")]
         [Description("Maranhão")]
         Maranhao,
 
-        //MT
+        [Code("MT")]
         [Description("Mato Grosso")]
         MatoGrosso,
 
-        //MS
+        [Code("MS")]
         [Description("Mato Grosso do Sul")]
         MatoGrossoDoSul,
 
-        //MG
+        [Code("MG")]
         [Description("Minas Gerais")]
         MinasGerais,
 
-        //PA
+        [Code("PA")]
         [Description("Pará")]
         Para,
 
-        //PB
+        [Code("PB")]
         [Description("Paraíba")]
         Paraiba,
 
-        //PR
+        [Code("PR")]
         [Description("Paraná")]
         Parana,
 
-        //PE
+        [Code("PE")]
         [Description("Pernambuco")]
         Pernambuco,
 
-        //PI
+        [Code("PI")]
         [Description("Piauí")]
         Piaui,
 
-        //RJ
+        [Code("RJ")]
         [Description("Rio de Janeiro")]
         RioDeJaneiro,
 
-        //RN
+        [Code("RN")]
         [Description("Rio Grande do Norte")]
         RioGrandeDoNorte,
 
-        //RS
+        [Code("RS")]
         [Description("Rio Grande do Sul")]
         RioGrandeDoSul,
 
-        //RO
+        [Code("RO")]
         [Description("Rondônia")]
         Rondonia,
 
-        //RR
+        [Code("RR")]
         [Description("Roraima")]
         Roraima,
 
-        //SC
+        [Code("SC")]
         [Description("Santa Catarina")]
         SantaCatarina,
 
-        //SP
+        [Code("SP")]
         [Description("São Paulo")]
         SaoPaulo,
 
-        //SE
+        [Code("SE")]
         [Description("Sergipe")]
         Sergipe,
 
-        //TO
+        [Code("TO")]
         [Description("Tocantins")]
         Tocantins,
 
-        //DF
+        [Code("DF")]
         [Description("Distrito Federal")]
         DistritoFederal
     }

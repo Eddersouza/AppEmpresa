@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\AppEmpresa.Utils\AppEmpresa.Utils.csproj" />
+  </ItemGroup>
+
 </Project>
