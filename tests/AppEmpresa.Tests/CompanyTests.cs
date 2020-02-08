@@ -23,7 +23,6 @@ namespace AppEmpresa.Tests
             Assert.AreEqual(true, company.IsValid());
         }
 
-
         [Test]
         public void CreateCompany_CNPJ_Wrong()
         {
@@ -37,7 +36,6 @@ namespace AppEmpresa.Tests
             //Assert
             Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("CNPJ Inválido.")));
         }
-
 
         [Test]
         public void CreateCompany_CompanyName_Empty()
@@ -94,7 +92,6 @@ namespace AppEmpresa.Tests
             //Assert
             Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("Empresa não encontrada.")));
         }
-
 
         [Test]
         public void DeleteCompany_CNPJ_Required()
