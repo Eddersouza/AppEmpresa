@@ -23,7 +23,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppEmpresa.Utils", "src\App
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppEmpresa.EventNotification", "src\AppEmpresa.EventNotification\AppEmpresa.EventNotification.csproj", "{8499D625-4B15-4EC8-B08B-83AB84210292}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppEmpresa.App", "src\AppEmpresa.App\AppEmpresa.App.csproj", "{8F805062-4B23-4A43-8211-A65AAC4259BD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppEmpresa.App", "src\AppEmpresa.App\AppEmpresa.App.csproj", "{8F805062-4B23-4A43-8211-A65AAC4259BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppEmpresa.Tests", "tests\AppEmpresa.Tests\AppEmpresa.Tests.csproj", "{A73BE92E-A158-4B1B-8BF8-42572B486073}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{8F805062-4B23-4A43-8211-A65AAC4259BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F805062-4B23-4A43-8211-A65AAC4259BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F805062-4B23-4A43-8211-A65AAC4259BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A73BE92E-A158-4B1B-8BF8-42572B486073}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A73BE92E-A158-4B1B-8BF8-42572B486073}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A73BE92E-A158-4B1B-8BF8-42572B486073}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A73BE92E-A158-4B1B-8BF8-42572B486073}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
