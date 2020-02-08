@@ -2,7 +2,7 @@
 
 namespace AppEmpresa.Domain.Entities
 {
-    public class CompanyList
+    public class CompanyList : Entity
     {
         private ICollection<Company> _itens;
 

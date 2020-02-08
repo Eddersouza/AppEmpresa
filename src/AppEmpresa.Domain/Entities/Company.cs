@@ -2,7 +2,7 @@
 
 namespace AppEmpresa.Domain.Entities
 {
-    public class Company
+    public class Company : Entity
     {
         public Company(
             string cnpj,
