@@ -109,5 +109,19 @@ namespace AppEmpresa.Tests
             //Assert
             Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("CNPJ da empresa é obrigatório.")));
         }
+
+        [Test]
+        public void UpdateCompany()
+        {
+            //Arrange
+            CompanyAppContract _companyApp = new CompanyApp();
+            Company company = new Company("10793548000190", "Company Name alt", State.Acre);
+
+            //Act
+            company = _companyApp.Update(company);
+
+            //Assert
+            Assert.AreEqual(true, company.IsValid());
+        }
     }
 }
