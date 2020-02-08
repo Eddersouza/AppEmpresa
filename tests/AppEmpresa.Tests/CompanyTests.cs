@@ -35,7 +35,7 @@ namespace AppEmpresa.Tests
             company = _companyApp.Create(company);
 
             //Assert
-            Assert.AreEqual(true, company.EventNotification.Errors.Select(x => x.ToString().Contains("CNPJ Inválido.")));
+            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("CNPJ Inválido.")));
         }
 
 
@@ -50,7 +50,7 @@ namespace AppEmpresa.Tests
             company = _companyApp.Create(company);
 
             //Assert
-            Assert.AreEqual(true, company.EventNotification.Errors.Select(x => x.ToString().Contains("Nome da Empresa é obrigatório.")));
+            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("Nome da Empresa é obrigatório.")));
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace AppEmpresa.Tests
             company = _companyApp.Create(company);
 
             //Assert
-            Assert.AreEqual(true, company.EventNotification.Errors.Select(x => x.ToString().Contains("Estado é obrigatório.")));
+            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("Estado é obrigatório.")));
         }
 
         [Test]
@@ -79,6 +79,20 @@ namespace AppEmpresa.Tests
 
             //Assert
             Assert.AreEqual(true, company.IsValid());
+        }
+
+        [Test]
+        public void DeleteCompany_NotFound()
+        {
+            //Arrange
+            CompanyAppContract _companyApp = new CompanyApp();
+            Company company = new Company("10793548000190", "", null);
+
+            //Act
+            company = _companyApp.Delete(company);
+
+            //Assert
+            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("Empresa não encontrada.")));
         }
     }
 }
