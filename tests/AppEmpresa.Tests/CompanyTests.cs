@@ -37,5 +37,20 @@ namespace AppEmpresa.Tests
             //Assert
             Assert.AreEqual(true, company.EventNotification.Errors.Select(x => x.ToString().Contains("CNPJ Inválido.")));
         }
+
+
+        [Test]
+        public void CreateCompany_CompanyName_Empty()
+        {
+            //Arrange
+            CompanyAppContract _companyApp = new CompanyApp();
+            Company company = new Company("10793548000190", "", State.Acre);
+
+            //Act
+            company = _companyApp.Create(company);
+
+            //Assert
+            Assert.AreEqual(true, company.EventNotification.Errors.Select(x => x.ToString().Contains("Nome da Empresa é obrigatório.")));
+        }
     }
 }
