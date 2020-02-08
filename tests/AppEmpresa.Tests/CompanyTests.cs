@@ -66,5 +66,19 @@ namespace AppEmpresa.Tests
             //Assert
             Assert.AreEqual(true, company.EventNotification.Errors.Select(x => x.ToString().Contains("Estado é obrigatório.")));
         }
+
+        [Test]
+        public void DeleteCompany()
+        {
+            //Arrange
+            CompanyAppContract _companyApp = new CompanyApp();
+            Company company = new Company("10793548000190", "", null);
+
+            //Act
+            company = _companyApp.Delete(company);
+
+            //Assert
+            Assert.AreEqual(true, company.IsValid());
+        }
     }
 }
