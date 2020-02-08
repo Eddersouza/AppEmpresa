@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace AppEmpresa.Domain.Entities
 {
     public class CompanyList : Entity
     {
-        private ICollection<Company> _itens;
+        private IList<Company> _itens;
 
         public CompanyList()
         {
@@ -12,11 +13,11 @@ namespace AppEmpresa.Domain.Entities
         }
 
         public CompanyList(
-            ICollection<Company> itens)
+            IList<Company> itens)
         {
             _itens = itens;
         }
 
-        public ICollection<Company> Itens { get { return _itens; } }
+        public IReadOnlyCollection<Company> Itens { get { return new ReadOnlyCollection<Company>(_itens); } }
     }
 }
