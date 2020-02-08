@@ -7,7 +7,7 @@ namespace AppEmpresa.Domain.Entities
         public Company(
             string cnpj,
             string companyName,
-            State state)
+            State? state)
         {
             CNPJ = cnpj;
             CompanyName = companyName;
@@ -16,6 +16,6 @@ namespace AppEmpresa.Domain.Entities
 
         public string CNPJ { get; set; }
         public string CompanyName { get; set; }
-        public State State { get; set; }
+        public State? State { get; set; }
     }
 }

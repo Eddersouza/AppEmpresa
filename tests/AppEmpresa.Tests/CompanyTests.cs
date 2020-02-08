@@ -52,5 +52,19 @@ namespace AppEmpresa.Tests
             //Assert
             Assert.AreEqual(true, company.EventNotification.Errors.Select(x => x.ToString().Contains("Nome da Empresa é obrigatório.")));
         }
+
+        [Test]
+        public void CreateCompany_StateEmpty()
+        {
+            //Arrange
+            CompanyAppContract _companyApp = new CompanyApp();
+            Company company = new Company("10793548000190", "Company Name", null);
+
+            //Act
+            company = _companyApp.Create(company);
+
+            //Assert
+            Assert.AreEqual(true, company.EventNotification.Errors.Select(x => x.ToString().Contains("Estado é obrigatório.")));
+        }
     }
 }
