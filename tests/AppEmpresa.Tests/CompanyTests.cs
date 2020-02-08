@@ -94,5 +94,20 @@ namespace AppEmpresa.Tests
             //Assert
             Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("Empresa não encontrada.")));
         }
+
+
+        [Test]
+        public void DeleteCompany_CNPJ_Required()
+        {
+            //Arrange
+            CompanyAppContract _companyApp = new CompanyApp();
+            Company company = new Company("", "", null);
+
+            //Act
+            company = _companyApp.Delete(company);
+
+            //Assert
+            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("CNPJ da empresa é obrigatório.")));
+        }
     }
 }
