@@ -21,11 +21,14 @@ namespace AppEmpresa.Tests.MockRepositories
                 new Company { CNPJ ="51464202000125", CompanyName = "Empresa São Paulo", CreateDate = DateTime.Now, State = State.SaoPaulo },
                 new Company { CNPJ ="06219163000146", CompanyName = "Empresa Mato Grosso", CreateDate = DateTime.Now, State = State.MatoGrosso }
             };
+
             Mock<CompanyRepositoryContract> companyRepository = new Mock<CompanyRepositoryContract>();
 
             AddCreate(companyRepository);
 
             AddGet(companyRepository);
+
+            AddGetCompany(companyRepository);
 
             AddDelete(companyRepository);
 
@@ -67,6 +70,16 @@ namespace AppEmpresa.Tests.MockRepositories
 
                 return companyList;
             });
+        }
+
+        private void AddGetCompany(
+            Mock<CompanyRepositoryContract> companyRepository)
+        {
+            companyRepository.Setup(cr => cr.Get(It.IsAny<string>()))
+                .ReturnsAsync((string cnpj) =>
+                {
+                    return Companies.FirstOrDefault(x => x.CNPJ == cnpj);
+                });
         }
     }
 }

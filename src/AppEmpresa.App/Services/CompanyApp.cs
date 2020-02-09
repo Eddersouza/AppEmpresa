@@ -49,10 +49,23 @@ namespace AppEmpresa.App.Services
         public async Task<Company> Delete(Company company)
         {
             try
-            {                
+            {
                 await _unityOfWork.BeginTransaction();
-                await _unityOfWork.Companies.Delete(company);
-                await _unityOfWork.Commit();
+
+                Company companyToDelete = await _unityOfWork.Companies.Get(company.CNPJ);
+
+                if (companyToDelete == null)
+                {
+                    company.EventNotification.Add(new EventNotificationDescription(
+                        "Empresa não encontrada.",
+                        new EventNotificationWarning()));
+
+                }
+                else
+                {
+                    await _unityOfWork.Companies.Delete(companyToDelete);
+                    await _unityOfWork.Commit();
+                }
 
                 return company;
             }

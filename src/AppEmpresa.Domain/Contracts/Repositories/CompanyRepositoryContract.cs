@@ -8,5 +8,7 @@ namespace AppEmpresa.Domain.Contracts.Repositories
         : BaseRepositoryContract<Company>
     {
         Task<CompanyList> Get(CompanyList companyList);
+
+        Task<Company> Get(string cnpj);
     }
 }
