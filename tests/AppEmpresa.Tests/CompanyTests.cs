@@ -5,13 +5,14 @@ using AppEmpresa.Domain.Entities;
 using AppEmpresa.Domain.Enums;
 using NUnit.Framework;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace AppEmpresa.Tests
 {
     public class CompanyTests
     {
         [Test]
-        public async void CreateCompany()
+        public async Task CreateCompany()
         {
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
@@ -20,14 +21,15 @@ namespace AppEmpresa.Tests
 
             //Act
             company = await _companyApp.Create(company);
-
+            CompanyList itens = await _companyApp.Get();
             //Assert
             Assert.AreEqual(true, company.IsValid());
+            Assert.AreEqual(5, itens.Itens.Count);
         }
 
         [Test]
         public async void CreateCompany_CNPJ_Wrong()
-        {            
+        {
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
             CompanyAppContract _companyApp = new CompanyApp(unityOfWork);

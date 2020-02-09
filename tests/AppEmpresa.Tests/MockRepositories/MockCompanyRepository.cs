@@ -9,16 +9,17 @@ namespace AppEmpresa.Tests.MockRepositories
 {
     public class MockCompanyRepository
     {
-        private IList<Company> Companies = new List<Company>
-        {
-            new Company { CNPJ ="68522679000112", CompanyName = "Empresa Santa Catarina", CreateDate = DateTime.Now, State = State.SantaCatarina },
-            new Company { CNPJ ="25119515000136", CompanyName = "Empresa Rio de Janeiro", CreateDate = DateTime.Now, State = State.RioDeJaneiro },
-            new Company { CNPJ ="51464202000125", CompanyName = "Empresa São Paulo", CreateDate = DateTime.Now, State = State.SaoPaulo },
-            new Company { CNPJ ="06219163000146", CompanyName = "Empresa Mato Grosso", CreateDate = DateTime.Now, State = State.MatoGrosso }
-        };
+        private IList<Company> Companies = new List<Company>();
 
         public CompanyRepositoryContract CreateCompanyRepository()
         {
+            Companies = new List<Company>
+            {
+                new Company { CNPJ ="68522679000112", CompanyName = "Empresa Santa Catarina", CreateDate = DateTime.Now, State = State.SantaCatarina },
+                new Company { CNPJ ="25119515000136", CompanyName = "Empresa Rio de Janeiro", CreateDate = DateTime.Now, State = State.RioDeJaneiro },
+                new Company { CNPJ ="51464202000125", CompanyName = "Empresa São Paulo", CreateDate = DateTime.Now, State = State.SaoPaulo },
+                new Company { CNPJ ="06219163000146", CompanyName = "Empresa Mato Grosso", CreateDate = DateTime.Now, State = State.MatoGrosso }
+            };
             Mock<CompanyRepositoryContract> companyRepository = new Mock<CompanyRepositoryContract>();
 
             AddCreate(companyRepository);

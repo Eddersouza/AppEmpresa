@@ -42,9 +42,10 @@ namespace AppEmpresa.App.Services
             return company;
         }
 
-        public CompanyList Get()
+        public async Task<CompanyList> Get()
         {
-            return new CompanyList();
+            CompanyList companyList = new CompanyList();
+            return await _unityOfWork.Companies.Get(companyList);
         }
 
         public Company Update(Company company)

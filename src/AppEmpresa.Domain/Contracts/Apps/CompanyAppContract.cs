@@ -9,7 +9,7 @@ namespace AppEmpresa.Domain.Contracts.Apps
 
         Company Delete(Company company);
 
-        CompanyList Get();
+        Task<CompanyList> Get();
 
         Company Update(Company company);
     }
