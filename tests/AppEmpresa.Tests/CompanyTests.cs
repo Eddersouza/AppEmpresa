@@ -43,7 +43,7 @@ namespace AppEmpresa.Tests
         }
 
         [Test]
-        public async void CreateCompany_CompanyName_Empty()
+        public async Task CreateCompany_CompanyName_Empty()
         {
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();

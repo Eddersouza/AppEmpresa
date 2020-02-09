@@ -7,10 +7,15 @@ namespace AppEmpresa.Domain.Entities
 {
     public class Company : Entity
     {
-        private static EventNotificationDescription InvalidCnpj =
+        private static EventNotificationDescription CnpjInvalid =
             new EventNotificationDescription(
                 "CNPJ Inválido.",
                 new EventNotificationWarning());
+
+        private static EventNotificationDescription NameEmpty =
+          new EventNotificationDescription(
+              "Nome da Empresa é obrigatório.",
+              new EventNotificationWarning());
 
         public Company()
         {
@@ -32,7 +37,8 @@ namespace AppEmpresa.Domain.Entities
 
         public void ValidateNewCompany()
         {
-            TestCondition(!CNPJ.IsCnpj(), InvalidCnpj);
+            TestCondition(!CNPJ.IsCnpj(), CnpjInvalid);
+            TestCondition(CompanyName.IsNullOrEmpty(), NameEmpty);
         }
     }
 }
