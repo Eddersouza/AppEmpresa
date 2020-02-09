@@ -1,7 +1,5 @@
 ﻿using AppEmpresa.EventNotification.Entities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AppEmpresa.Domain.Entities
 {
@@ -13,7 +11,5 @@ namespace AppEmpresa.Domain.Entities
         }
 
         public DateTime CreateDate { get; set; }
-
-        public string CreatedByUserId { get; set; }
     }
 }
