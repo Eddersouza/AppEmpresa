@@ -28,12 +28,12 @@ namespace AppEmpresa.Tests
         }
 
         [Test]
-        public async void CreateCompany_CNPJ_Wrong()
+        public async Task CreateCompany_CNPJ_Wrong()
         {
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
             CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
-            Company company = new Company("10793548000190", "Company Name", State.Acre);
+            Company company = new Company("10793548000191", "Company Name", State.Acre);
 
             //Act
             company = await _companyApp.Create(company);

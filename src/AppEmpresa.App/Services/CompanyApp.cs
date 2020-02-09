@@ -19,6 +19,11 @@ namespace AppEmpresa.App.Services
         {
             try
             {
+                company.ValidateNewCompany();
+
+                if (!company.IsValid())
+                    return company;
+
                 await _unityOfWork.BeginTransaction();
                 await _unityOfWork.Companies.Create(company);
                 await _unityOfWork.Commit();
