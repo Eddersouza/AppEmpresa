@@ -17,6 +17,11 @@ namespace AppEmpresa.Domain.Entities
               "Nome da Empresa é obrigatório.",
               new EventNotificationWarning());
 
+        private static EventNotificationDescription StateEmpty =
+            new EventNotificationDescription(
+                "Estado é obrigatório.",
+                new EventNotificationWarning());
+
         public Company()
         {
         }
@@ -39,6 +44,7 @@ namespace AppEmpresa.Domain.Entities
         {
             TestCondition(!CNPJ.IsCnpj(), CnpjInvalid);
             TestCondition(CompanyName.IsNullOrEmpty(), NameEmpty);
+            TestCondition(!State.HasValue, StateEmpty);
         }
     }
 }

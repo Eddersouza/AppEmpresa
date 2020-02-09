@@ -58,7 +58,7 @@ namespace AppEmpresa.Tests
         }
 
         [Test]
-        public async void CreateCompany_StateEmpty()
+        public async Task CreateCompany_StateEmpty()
         {
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
@@ -73,7 +73,7 @@ namespace AppEmpresa.Tests
         }
 
         [Test]
-        public void DeleteCompany()
+        public async Task DeleteCompany()
         {
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
@@ -82,9 +82,10 @@ namespace AppEmpresa.Tests
 
             //Act
             company = _companyApp.Delete(company);
+            CompanyList itens = await _companyApp.Get();
 
             //Assert
-            Assert.AreEqual(true, company.IsValid());
+            Assert.AreEqual(3, itens.Itens.Count);
         }
 
         [Test]
