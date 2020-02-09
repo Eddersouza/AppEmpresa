@@ -21,7 +21,7 @@ namespace AppEmpresa.App.Services
         {
             try
             {
-                company.ValidateNewCompany();
+                company.ValidateNewOrUpdateCompany();
 
                 if (!company.IsValid())
                     return company;
@@ -100,6 +100,11 @@ namespace AppEmpresa.App.Services
         {
             try
             {
+                company.ValidateNewOrUpdateCompany();
+
+                if (!company.IsValid())
+                    return company;
+
                 await _unityOfWork.BeginTransaction();
                 await _unityOfWork.Companies.Update(company);
 

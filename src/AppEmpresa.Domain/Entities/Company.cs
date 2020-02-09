@@ -50,7 +50,7 @@ namespace AppEmpresa.Domain.Entities
             TestCondition(CNPJ.IsNullOrEmpty(), CnpjRequired);
         }
 
-        public void ValidateNewCompany()
+        public void ValidateNewOrUpdateCompany()
         {
             TestCondition(CNPJ.IsNullOrEmpty(), CnpjRequired);
             TestCondition(!CNPJ.IsCnpj(), CnpjInvalid);
