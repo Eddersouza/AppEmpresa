@@ -60,12 +60,9 @@ namespace AppEmpresa.App.Services
                 Company companyToDelete = await _unityOfWork.Companies.Get(company.CNPJ);
 
                 if (companyToDelete == null)
-                {
                     company.EventNotification.Add(new EventNotificationDescription(
                         "Empresa não encontrada.",
                         new EventNotificationWarning()));
-
-                }
                 else
                     await _unityOfWork.Companies.Delete(companyToDelete);
 
@@ -101,6 +98,13 @@ namespace AppEmpresa.App.Services
             try
             {
                 company.ValidateNewOrUpdateCompany();
+
+                Company companyToUpdate = await _unityOfWork.Companies.Get(company.CNPJ);
+
+                if (companyToUpdate == null)
+                    company.EventNotification.Add(new EventNotificationDescription(
+                        "Empresa não encontrada.",
+                        new EventNotificationWarning()));
 
                 if (!company.IsValid())
                     return company;
