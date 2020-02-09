@@ -11,6 +11,6 @@ namespace AppEmpresa.Domain.Contracts.Repositories.Base
 
         Task<Entity> Delete(Entity entity);
 
-        Task Update(Entity entity);
+        Task<Entity> Update(Entity entity);
     }
 }

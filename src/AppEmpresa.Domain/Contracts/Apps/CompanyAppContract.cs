@@ -11,6 +11,8 @@ namespace AppEmpresa.Domain.Contracts.Apps
 
         Task<CompanyList> Get();
 
-        Company Update(Company company);
+        Task<Company> Get(string cnpj);
+
+        Task<Company> Update(Company company);
     }
 }

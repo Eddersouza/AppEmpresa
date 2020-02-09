@@ -32,6 +32,8 @@ namespace AppEmpresa.Tests.MockRepositories
 
             AddDelete(companyRepository);
 
+            AddUpdate(companyRepository);
+
             return companyRepository.Object;
         }
 
@@ -80,6 +82,24 @@ namespace AppEmpresa.Tests.MockRepositories
                 {
                     return Companies.FirstOrDefault(x => x.CNPJ == cnpj);
                 });
+        }
+
+        private void AddUpdate(
+            Mock<CompanyRepositoryContract> companyRepository)
+        {
+            companyRepository.Setup(cr => cr.Update(It.IsAny<Company>()))
+              .ReturnsAsync((Company company) =>
+              {
+                  var companyToUpdate = Companies.FirstOrDefault(x => x.CNPJ == company.CNPJ);
+
+                  if (companyToUpdate == null)
+                      return company;
+
+                  companyToUpdate.CompanyName = company.CompanyName;
+                  companyToUpdate.State = company.State;
+
+                  return companyToUpdate;
+              });
         }
     }
 }

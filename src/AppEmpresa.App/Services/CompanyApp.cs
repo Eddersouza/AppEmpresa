@@ -50,6 +50,11 @@ namespace AppEmpresa.App.Services
         {
             try
             {
+                company.ValidateDeleteCompany();
+
+                if (!company.IsValid())
+                    return company;
+
                 await _unityOfWork.BeginTransaction();
 
                 Company companyToDelete = await _unityOfWork.Companies.Get(company.CNPJ);
@@ -62,10 +67,9 @@ namespace AppEmpresa.App.Services
 
                 }
                 else
-                {
                     await _unityOfWork.Companies.Delete(companyToDelete);
-                    await _unityOfWork.Commit();
-                }
+
+                await _unityOfWork.Commit();
 
                 return company;
             }
@@ -87,11 +91,34 @@ namespace AppEmpresa.App.Services
             return await _unityOfWork.Companies.Get(companyList);
         }
 
-        public Company Update(Company company)
+        public async Task<Company> Get(string cnpj)
         {
-            return company;
+            return await _unityOfWork.Companies.Get(cnpj);
+        }
 
-            //throw new NotImplementedException();
+        public async Task<Company> Update(Company company)
+        {
+            try
+            {
+                await _unityOfWork.BeginTransaction();
+                await _unityOfWork.Companies.Update(company);
+
+                company = await _unityOfWork.Companies.Get(company.CNPJ);
+                await _unityOfWork.Commit();
+
+                return company;
+
+            }
+            catch
+            {
+                await _unityOfWork.Rowback();
+
+                company.EventNotification.Add(new EventNotificationDescription(
+                    "Ocorreu um erro ao Alterar Empresa.",
+                    new EventNotificationError()));
+
+                return company;
+            }
         }
     }
 }
