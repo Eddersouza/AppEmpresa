@@ -13,10 +13,9 @@ namespace AppEmpresa.Tests
         [Test]
         public async void CreateCompany()
         {
-            UnityOfWorkContract unityOfWork;
-
             //Arrange
-            CompanyAppContract _companyApp = new CompanyApp();
+            UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
             Company company = new Company("10793548000190", "Company Name", State.Acre);
 
             //Act
@@ -28,51 +27,55 @@ namespace AppEmpresa.Tests
 
         [Test]
         public async void CreateCompany_CNPJ_Wrong()
-        {
+        {            
             //Arrange
-            CompanyAppContract _companyApp = new CompanyApp();
+            UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
             Company company = new Company("10793548000190", "Company Name", State.Acre);
 
             //Act
             company = await _companyApp.Create(company);
 
             //Assert
-            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("CNPJ Inválido.")));
+            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString()).Contains("CNPJ Inválido."));
         }
 
         [Test]
         public async void CreateCompany_CompanyName_Empty()
         {
             //Arrange
-            CompanyAppContract _companyApp = new CompanyApp();
+            UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
             Company company = new Company("10793548000190", "", State.Acre);
 
             //Act
             company = await _companyApp.Create(company);
 
             //Assert
-            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("Nome da Empresa é obrigatório.")));
+            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString()).Contains("Nome da Empresa é obrigatório."));
         }
 
         [Test]
         public async void CreateCompany_StateEmpty()
         {
             //Arrange
-            CompanyAppContract _companyApp = new CompanyApp();
+            UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
             Company company = new Company("10793548000190", "Company Name", null);
 
             //Act
             company = await _companyApp.Create(company);
 
             //Assert
-            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("Estado é obrigatório.")));
+            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString()).Contains("Estado é obrigatório."));
         }
 
         [Test]
         public void DeleteCompany()
         {
             //Arrange
-            CompanyAppContract _companyApp = new CompanyApp();
+            UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
             Company company = new Company("10793548000190", "", null);
 
             //Act
@@ -86,35 +89,38 @@ namespace AppEmpresa.Tests
         public void DeleteCompany_NotFound()
         {
             //Arrange
-            CompanyAppContract _companyApp = new CompanyApp();
+            UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
             Company company = new Company("10793548000190", "", null);
 
             //Act
             company = _companyApp.Delete(company);
 
             //Assert
-            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("Empresa não encontrada.")));
+            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString()).Contains("Empresa não encontrada."));
         }
 
         [Test]
         public void DeleteCompany_CNPJ_Required()
         {
             //Arrange
-            CompanyAppContract _companyApp = new CompanyApp();
+            UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
             Company company = new Company("", "", null);
 
             //Act
             company = _companyApp.Delete(company);
 
             //Assert
-            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("CNPJ da empresa é obrigatório.")));
+            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString()).Contains("CNPJ da empresa é obrigatório."));
         }
 
         [Test]
         public void UpdateCompany()
         {
             //Arrange
-            CompanyAppContract _companyApp = new CompanyApp();
+            UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
             Company company = new Company("10793548000190", "Company Name alt", State.Acre);
 
             //Act
@@ -128,56 +134,60 @@ namespace AppEmpresa.Tests
         public void UpdateCompany_NotUpdateCNPJ()
         {
             //Arrange
-            CompanyAppContract _companyApp = new CompanyApp();
+            UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
             Company company = new Company("10793548000190", "Company Name alt", State.Acre);
 
             //Act
             company = _companyApp.Update(company);
 
             //Assert
-            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("CNPJ Não pode ser alterado.")));
+            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString()).Contains("CNPJ Não pode ser alterado."));
         }
 
         [Test]
         public void UpdateCompany_NotFound()
         {
             //Arrange
-            CompanyAppContract _companyApp = new CompanyApp();
+            UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
             Company company = new Company("10793548000190", "Company Name alt", State.Acre);
 
             //Act
             company = _companyApp.Update(company);
 
             //Assert
-            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("Empresa não encontrada.")));
+            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString()).Contains("Empresa não encontrada."));
         }
 
         [Test]
         public void UpdateCompany_CompanyName_Empty()
         {
             //Arrange
-            CompanyAppContract _companyApp = new CompanyApp();
+            UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
             Company company = new Company("10793548000190", "", State.Acre);
 
             //Act
             company = _companyApp.Update(company);
 
             //Assert
-            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("Nome da Empresa é obrigatório.")));
+            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString()).Contains("Nome da Empresa é obrigatório."));
         }
 
         [Test]
         public void UpdateCompany_StateEmpty()
         {
             //Arrange
-            CompanyAppContract _companyApp = new CompanyApp();
+            UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
             Company company = new Company("10793548000190", "Company Name", null);
 
             //Act
             company = _companyApp.Update(company);
 
             //Assert
-            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("Estado é obrigatório.")));
+            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString()).Contains("Estado é obrigatório."));
         }
     }
 }

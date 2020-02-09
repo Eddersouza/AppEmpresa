@@ -10,8 +10,9 @@ namespace AppEmpresa.App.Services
     {
         private readonly UnityOfWorkContract _unityOfWork;
 
-        public CompanyApp()
-        {            
+        public CompanyApp(UnityOfWorkContract unityOfWork)
+        {
+            _unityOfWork = unityOfWork;
         }
 
         public async Task<Company> Create(Company company)
@@ -19,7 +20,7 @@ namespace AppEmpresa.App.Services
             try
             {
                 await _unityOfWork.BeginTransaction();
-                await _unityOfWork.companyRepository.Create(company);
+                await _unityOfWork.Companies.Create(company);
                 await _unityOfWork.Commit();
 
                 return company;
@@ -36,17 +37,21 @@ namespace AppEmpresa.App.Services
 
         public Company Delete(Company company)
         {
-            throw new NotImplementedException();
+            // throw new NotImplementedException();
+
+            return company;
         }
 
         public CompanyList Get()
         {
-            throw new NotImplementedException();
+            return new CompanyList();
         }
 
         public Company Update(Company company)
         {
-            throw new NotImplementedException();
+            return company;
+
+            //throw new NotImplementedException();
         }
     }
 }

@@ -4,7 +4,7 @@ namespace AppEmpresa.Domain.Contracts.Repositories.Base
 {
     public interface UnityOfWorkContract
     {
-        CompanyRepositoryContract companyRepository { get; }
+        CompanyRepositoryContract Companies { get; }
 
         Task BeginTransaction();
 

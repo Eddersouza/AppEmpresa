@@ -7,7 +7,7 @@ namespace AppEmpresa.Domain.Contracts.Repositories.Base
     public interface BaseRepositoryContract<Entity> : IDisposable
         where Entity : class
     {
-        Task Create(Entity entity);
+        Task<Entity> Create(Entity entity);
 
         Task Delete(Entity entity);
 

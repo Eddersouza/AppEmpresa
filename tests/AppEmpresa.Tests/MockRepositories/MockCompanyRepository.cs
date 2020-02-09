@@ -21,9 +21,23 @@ namespace AppEmpresa.Tests.MockRepositories
         {
             Mock<CompanyRepositoryContract> companyRepository = new Mock<CompanyRepositoryContract>();
 
+            AddCreate(companyRepository);
+
             AddGet(companyRepository);
 
             return companyRepository.Object;
+        }
+
+        private void AddCreate(
+            Mock<CompanyRepositoryContract> companyRepository)
+        {
+            companyRepository.Setup(cr => cr.Create(It.IsAny<Company>()))
+                .ReturnsAsync((Company company) =>
+                {
+                    Companies.Add(company);
+
+                    return company;
+                });
         }
 
         private void AddGet(
