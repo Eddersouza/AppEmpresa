@@ -1,5 +1,6 @@
 ﻿using AppEmpresa.App.Services;
 using AppEmpresa.Domain.Contracts.Apps;
+using AppEmpresa.Domain.Contracts.Repositories.Base;
 using AppEmpresa.Domain.Entities;
 using AppEmpresa.Domain.Enums;
 using NUnit.Framework;
@@ -10,56 +11,58 @@ namespace AppEmpresa.Tests
     public class CompanyTests
     {
         [Test]
-        public void CreateCompany()
+        public async void CreateCompany()
         {
+            UnityOfWorkContract unityOfWork;
+
             //Arrange
             CompanyAppContract _companyApp = new CompanyApp();
             Company company = new Company("10793548000190", "Company Name", State.Acre);
 
             //Act
-            company = _companyApp.Create(company);
+            company = await _companyApp.Create(company);
 
             //Assert
             Assert.AreEqual(true, company.IsValid());
         }
 
         [Test]
-        public void CreateCompany_CNPJ_Wrong()
+        public async void CreateCompany_CNPJ_Wrong()
         {
             //Arrange
             CompanyAppContract _companyApp = new CompanyApp();
             Company company = new Company("10793548000190", "Company Name", State.Acre);
 
             //Act
-            company = _companyApp.Create(company);
+            company = await _companyApp.Create(company);
 
             //Assert
             Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("CNPJ Inválido.")));
         }
 
         [Test]
-        public void CreateCompany_CompanyName_Empty()
+        public async void CreateCompany_CompanyName_Empty()
         {
             //Arrange
             CompanyAppContract _companyApp = new CompanyApp();
             Company company = new Company("10793548000190", "", State.Acre);
 
             //Act
-            company = _companyApp.Create(company);
+            company = await _companyApp.Create(company);
 
             //Assert
             Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("Nome da Empresa é obrigatório.")));
         }
 
         [Test]
-        public void CreateCompany_StateEmpty()
+        public async void CreateCompany_StateEmpty()
         {
             //Arrange
             CompanyAppContract _companyApp = new CompanyApp();
             Company company = new Company("10793548000190", "Company Name", null);
 
             //Act
-            company = _companyApp.Create(company);
+            company = await _companyApp.Create(company);
 
             //Assert
             Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString().Contains("Estado é obrigatório.")));

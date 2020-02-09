@@ -1,10 +1,11 @@
 ﻿using AppEmpresa.Domain.Entities;
+using System.Threading.Tasks;
 
 namespace AppEmpresa.Domain.Contracts.Apps
 {
     public interface CompanyAppContract
     {
-        Company Create(Company company);
+        Task<Company> Create(Company company);
 
         Company Delete(Company company);
 
