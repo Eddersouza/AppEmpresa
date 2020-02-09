@@ -1,6 +1,8 @@
 ﻿using AppEmpresa.Domain.Contracts.Apps;
 using AppEmpresa.Domain.Contracts.Repositories.Base;
 using AppEmpresa.Domain.Entities;
+using AppEmpresa.EventNotification.Entities;
+using AppEmpresa.EventNotification.Entities.Levels;
 using System;
 using System.Threading.Tasks;
 
@@ -34,6 +36,10 @@ namespace AppEmpresa.App.Services
             catch
             {
                 await _unityOfWork.Rowback();
+
+                company.EventNotification.Add(new EventNotificationDescription(
+                    "Ocorreu um erro ao Criar Nova Empresa.",
+                    new EventNotificationError()));
 
                 return company;
             }
