@@ -7,7 +7,7 @@ namespace AppEmpresa.Domain.Contracts.Apps
     {
         Task<Company> Create(Company company);
 
-        Company Delete(Company company);
+        Task<Company> Delete(Company company);
 
         Task<CompanyList> Get();
 

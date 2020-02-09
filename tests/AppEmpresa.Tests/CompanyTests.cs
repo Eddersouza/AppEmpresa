@@ -78,10 +78,10 @@ namespace AppEmpresa.Tests
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
             CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
-            Company company = new Company("10793548000190", "", null);
+            Company company = new Company("68522679000112", "", null);
 
             //Act
-            company = _companyApp.Delete(company);
+            company = await _companyApp.Delete(company);
             CompanyList itens = await _companyApp.Get();
 
             //Assert
@@ -89,7 +89,7 @@ namespace AppEmpresa.Tests
         }
 
         [Test]
-        public void DeleteCompany_NotFound()
+        public async Task DeleteCompany_NotFound()
         {
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
@@ -97,14 +97,14 @@ namespace AppEmpresa.Tests
             Company company = new Company("10793548000190", "", null);
 
             //Act
-            company = _companyApp.Delete(company);
+            company = await _companyApp.Delete(company);
 
             //Assert
             Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString()).Contains("Empresa não encontrada."));
         }
 
         [Test]
-        public void DeleteCompany_CNPJ_Required()
+        public async Task DeleteCompany_CNPJ_Required()
         {
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
@@ -112,7 +112,7 @@ namespace AppEmpresa.Tests
             Company company = new Company("", "", null);
 
             //Act
-            company = _companyApp.Delete(company);
+            company = await _companyApp.Delete(company);
 
             //Assert
             Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString()).Contains("CNPJ da empresa é obrigatório."));

@@ -46,11 +46,26 @@ namespace AppEmpresa.App.Services
 
         }
 
-        public Company Delete(Company company)
+        public async Task<Company> Delete(Company company)
         {
-            // throw new NotImplementedException();
+            try
+            {                
+                await _unityOfWork.BeginTransaction();
+                await _unityOfWork.Companies.Delete(company);
+                await _unityOfWork.Commit();
 
-            return company;
+                return company;
+            }
+            catch
+            {
+                await _unityOfWork.Rowback();
+
+                company.EventNotification.Add(new EventNotificationDescription(
+                    "Ocorreu um erro ao Excluir Empresa.",
+                    new EventNotificationError()));
+
+                return company;
+            }
         }
 
         public async Task<CompanyList> Get()

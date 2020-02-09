@@ -9,7 +9,7 @@ namespace AppEmpresa.Domain.Contracts.Repositories.Base
     {
         Task<Entity> Create(Entity entity);
 
-        Task Delete(Entity entity);
+        Task<Entity> Delete(Entity entity);
 
         Task Update(Entity entity);
     }

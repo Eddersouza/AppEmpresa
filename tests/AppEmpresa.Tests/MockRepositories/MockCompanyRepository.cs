@@ -4,6 +4,7 @@ using AppEmpresa.Domain.Enums;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AppEmpresa.Tests.MockRepositories
 {
@@ -26,6 +27,8 @@ namespace AppEmpresa.Tests.MockRepositories
 
             AddGet(companyRepository);
 
+            AddDelete(companyRepository);
+
             return companyRepository.Object;
         }
 
@@ -36,6 +39,19 @@ namespace AppEmpresa.Tests.MockRepositories
                 .ReturnsAsync((Company company) =>
                 {
                     Companies.Add(company);
+
+                    return company;
+                });
+        }
+
+        private void AddDelete(Mock<CompanyRepositoryContract> companyRepository)
+        {
+            companyRepository.Setup(cr => cr.Delete(It.IsAny<Company>()))
+                .ReturnsAsync((Company company) =>
+                {
+                    var companyToDelete = Companies.FirstOrDefault(x => x.CNPJ == company.CNPJ);
+
+                    Companies.Remove(companyToDelete);
 
                     return company;
                 });
