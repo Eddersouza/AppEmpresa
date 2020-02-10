@@ -1,8 +1,5 @@
 ﻿using AppEmpresa.Domain.Entities;
 using FluentNHibernate.Mapping;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace AppEmpresa.Data.NHibernate.Maps
 {
@@ -14,7 +11,10 @@ namespace AppEmpresa.Data.NHibernate.Maps
             Id(company => company.CNPJ);
             Map(company => company.CompanyName);
             Map(company => company.CreateDate);
-            Map(company => company.StateCode);            
+            Map(company => company.StateCode);
+
+            Schema("Core");
+            Table("Companies");
         }
     }
 }
