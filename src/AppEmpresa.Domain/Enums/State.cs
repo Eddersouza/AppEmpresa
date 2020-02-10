@@ -5,6 +5,10 @@ namespace AppEmpresa.Domain.Enums
 {
     public enum State
     {
+        [Code("")]
+        [Description("Escolha um Estado")]
+        EscolhaUmEstado,
+
         [Code("AC")]
         [Description("Acre")]
         Acre,

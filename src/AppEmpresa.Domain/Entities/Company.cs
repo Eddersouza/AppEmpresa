@@ -43,7 +43,12 @@ namespace AppEmpresa.Domain.Entities
 
         public string CNPJ { get; set; }
         public string CompanyName { get; set; }
-        public State? State { get; set; }
+        public virtual State? State { get; set; }
+        public string StateCode
+        {
+            get { return State.GetCode(); }
+            set { State = value.GetEnumByCode<State>(Enums.State.EscolhaUmEstado); }
+        }
 
         public void ValidateDeleteCompany()
         {
@@ -55,7 +60,7 @@ namespace AppEmpresa.Domain.Entities
             TestCondition(CNPJ.IsNullOrEmpty(), CnpjRequired);
             TestCondition(!CNPJ.IsCnpj(), CnpjInvalid);
             TestCondition(CompanyName.IsNullOrEmpty(), NameEmpty);
-            TestCondition(!State.HasValue, StateEmpty);
+            TestCondition(!State.HasValue || State.Value.Equals(Enums.State.EscolhaUmEstado), StateEmpty);
         }
     }
 }
