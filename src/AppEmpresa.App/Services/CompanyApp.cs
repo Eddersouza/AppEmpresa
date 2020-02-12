@@ -26,16 +26,16 @@ namespace AppEmpresa.App.Services
                 if (!company.IsValid())
                     return company;
 
-                await _unityOfWork.BeginTransaction();
+                _unityOfWork.BeginTransaction();
                 await _unityOfWork.Companies.Create(company);
-                await _unityOfWork.Commit();
+                _unityOfWork.Commit();
 
                 return company;
 
             }
             catch
             {
-                await _unityOfWork.Rowback();
+                _unityOfWork.Rowback();
 
                 company.EventNotification.Add(new EventNotificationDescription(
                     "Ocorreu um erro ao Criar Nova Empresa.",
@@ -55,7 +55,7 @@ namespace AppEmpresa.App.Services
                 if (!company.IsValid())
                     return company;
 
-                await _unityOfWork.BeginTransaction();
+                _unityOfWork.BeginTransaction();
 
                 Company companyToDelete = await _unityOfWork.Companies.Get(company.CNPJ);
 
@@ -66,13 +66,13 @@ namespace AppEmpresa.App.Services
                 else
                     await _unityOfWork.Companies.Delete(companyToDelete);
 
-                await _unityOfWork.Commit();
+                _unityOfWork.Commit();
 
                 return company;
             }
             catch
             {
-                await _unityOfWork.Rowback();
+                _unityOfWork.Rowback();
 
                 company.EventNotification.Add(new EventNotificationDescription(
                     "Ocorreu um erro ao Excluir Empresa.",
@@ -109,18 +109,18 @@ namespace AppEmpresa.App.Services
                 if (!company.IsValid())
                     return company;
 
-                await _unityOfWork.BeginTransaction();
+                _unityOfWork.BeginTransaction();
                 await _unityOfWork.Companies.Update(company);
 
                 company = await _unityOfWork.Companies.Get(company.CNPJ);
-                await _unityOfWork.Commit();
+                _unityOfWork.Commit();
 
                 return company;
 
             }
             catch
             {
-                await _unityOfWork.Rowback();
+                _unityOfWork.Rowback();
 
                 company.EventNotification.Add(new EventNotificationDescription(
                     "Ocorreu um erro ao Alterar Empresa.",

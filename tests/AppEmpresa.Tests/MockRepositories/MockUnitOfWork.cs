@@ -16,19 +16,16 @@ namespace AppEmpresa.Tests.MockRepositories
 
         public CompanyRepositoryContract Companies => _companies;
 
-        public Task BeginTransaction()
-        {
-            return Task.Delay(1);
+        public void BeginTransaction()
+        {            
         }
 
-        public Task Commit()
-        {
-            return Task.Delay(1);
+        public void Commit()
+        {           
         }
 
-        public Task Rowback()
-        {
-            return Task.Delay(1);
+        public void Rowback()
+        {            
         }
     }
 }

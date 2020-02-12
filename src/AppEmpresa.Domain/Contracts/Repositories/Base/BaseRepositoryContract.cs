@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace AppEmpresa.Domain.Contracts.Repositories.Base
 {
-    public interface BaseRepositoryContract<Entity> : IDisposable
+    public interface BaseRepositoryContract<Entity>
         where Entity : class
     {
-        Task<Entity> Create(Entity entity);
+        Task<object> Create(Entity entity);
 
-        Task<Entity> Delete(Entity entity);
+        Task<object> Delete(Entity entity);
 
-        Task<Entity> Update(Entity entity);
+        Task<object> Update(Entity entity);
     }
 }

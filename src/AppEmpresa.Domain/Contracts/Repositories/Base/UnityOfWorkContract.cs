@@ -6,10 +6,10 @@ namespace AppEmpresa.Domain.Contracts.Repositories.Base
     {
         CompanyRepositoryContract Companies { get; }
 
-        Task BeginTransaction();
+        void BeginTransaction();
 
-        Task Commit();
+        void Commit();
 
-        Task Rowback();
+        void Rowback();
     }
 }

@@ -27,9 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppEmpresa.App", "src\AppEm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppEmpresa.Tests", "tests\AppEmpresa.Tests\AppEmpresa.Tests.csproj", "{A73BE92E-A158-4B1B-8BF8-42572B486073}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5-Tests", "5-Tests", "{606F12B7-4BB5-4D2E-9D63-CB1CB9F9B5EA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5 - Tests", "5 - Tests", "{606F12B7-4BB5-4D2E-9D63-CB1CB9F9B5EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppEmpresa.Data.NHibernate", "src\AppEmpresa.Data.NHibernate\AppEmpresa.Data.NHibernate.csproj", "{821332AF-E4EC-4FAF-B647-706303CC8F58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppEmpresa.Data.NHibernate", "src\AppEmpresa.Data.NHibernate\AppEmpresa.Data.NHibernate.csproj", "{821332AF-E4EC-4FAF-B647-706303CC8F58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
