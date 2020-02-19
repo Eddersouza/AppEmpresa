@@ -15,19 +15,22 @@ namespace AppEmpresa.Data.NHibernate.Repositories.Base
             _session = session;
         }
 
-        public async Task<object> Create(Entity entity)
+        public async Task<Entity> Create(Entity entity)
         {
-            return _session.SaveAsync(entity);
+            await _session.SaveAsync(entity);
+            return entity;
         }
 
-        public async Task<object> Delete(Entity entity)
+        public async Task<Entity> Delete(Entity entity)
         {
-            return _session.DeleteAsync(entity);
+            await _session.DeleteAsync(entity);
+            return entity;
         }
 
-        public async Task<object> Update(Entity entity)
+        public async Task<Entity> Update(Entity entity)
         {
-            return _session.UpdateAsync(entity);
+            await _session.UpdateAsync(entity);
+            return entity;
         }
     }
 }
