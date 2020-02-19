@@ -1,14 +1,11 @@
 ﻿using AppEmpresa.Domain.Contracts.Repositories.Base;
 using AppEmpresa.Domain.Entities;
-using System.Threading.Tasks;
 
 namespace AppEmpresa.Domain.Contracts.Repositories
 {
     public interface CompanyRepositoryContract
-        : BaseRepositoryContract<Company>
+        : BaseRepositoryContract<Company>, 
+        BaseRepositoryQueryContract<Company, CompanyList>
     {
-        Task<CompanyList> Get(CompanyList companyList);
-
-        Task<Company> Get(string cnpj);
     }
 }

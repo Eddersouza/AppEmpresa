@@ -33,7 +33,7 @@ namespace AppEmpresa.App.Services
                 return company;
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _unityOfWork.Rowback();
 
@@ -57,7 +57,7 @@ namespace AppEmpresa.App.Services
 
                 _unityOfWork.BeginTransaction();
 
-                Company companyToDelete = await _unityOfWork.Companies.Get(company.CNPJ);
+                Company companyToDelete = await _unityOfWork.Companies.Get(company.PrimaryKeys);
 
                 if (companyToDelete == null)
                     company.EventNotification.Add(new EventNotificationDescription(
@@ -70,7 +70,7 @@ namespace AppEmpresa.App.Services
 
                 return company;
             }
-            catch
+            catch(Exception ex)
             {
                 _unityOfWork.Rowback();
 
@@ -90,7 +90,8 @@ namespace AppEmpresa.App.Services
 
         public async Task<Company> Get(string cnpj)
         {
-            return await _unityOfWork.Companies.Get(cnpj);
+            Company company = new Company(cnpj, string.Empty, null);
+            return await _unityOfWork.Companies.Get(company.PrimaryKeys);
         }
 
         public async Task<Company> Update(Company company)
@@ -99,7 +100,7 @@ namespace AppEmpresa.App.Services
             {
                 company.ValidateNewOrUpdateCompany();
 
-                Company companyToUpdate = await _unityOfWork.Companies.Get(company.CNPJ);
+                Company companyToUpdate = await _unityOfWork.Companies.Get(company.PrimaryKeys);
 
                 if (companyToUpdate == null)
                     company.EventNotification.Add(new EventNotificationDescription(
@@ -112,7 +113,7 @@ namespace AppEmpresa.App.Services
                 _unityOfWork.BeginTransaction();
                 await _unityOfWork.Companies.Update(company);
 
-                company = await _unityOfWork.Companies.Get(company.CNPJ);
+                company = await _unityOfWork.Companies.Get(company.PrimaryKeys);
                 _unityOfWork.Commit();
 
                 return company;

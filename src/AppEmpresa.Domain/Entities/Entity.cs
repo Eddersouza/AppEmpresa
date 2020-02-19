@@ -12,6 +12,6 @@ namespace AppEmpresa.Domain.Entities
 
         public virtual DateTime CreateDate { get; set; }
 
-        public abstract object[] ChavePrimaria { get; }
+        public abstract object[] PrimaryKeys { get; }
     }
 }

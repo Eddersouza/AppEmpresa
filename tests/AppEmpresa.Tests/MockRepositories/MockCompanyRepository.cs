@@ -77,10 +77,10 @@ namespace AppEmpresa.Tests.MockRepositories
         private void AddGetCompany(
             Mock<CompanyRepositoryContract> companyRepository)
         {
-            companyRepository.Setup(cr => cr.Get(It.IsAny<string>()))
-                .ReturnsAsync((string cnpj) =>
+            companyRepository.Setup(cr => cr.Get(It.IsAny<object[]>()))
+                .ReturnsAsync((object[] primaryKeys) =>
                 {
-                    return Companies.FirstOrDefault(x => x.CNPJ == cnpj);
+                    return Companies.FirstOrDefault(x => x.CNPJ == primaryKeys[0].ToString());
                 });
         }
 

@@ -50,7 +50,7 @@ namespace AppEmpresa.Domain.Entities
             set { State = value.GetEnumByCode<State>(Enums.State.EscolhaUmEstado); }
         }
 
-        public override object[] ChavePrimaria
+        public override object[] PrimaryKeys
         {
             get { return new object[] { CNPJ }; }
         }

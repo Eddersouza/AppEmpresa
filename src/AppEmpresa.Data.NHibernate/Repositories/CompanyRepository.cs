@@ -7,19 +7,20 @@ using System.Threading.Tasks;
 
 namespace AppEmpresa.Data.NHibernate.Repositories
 {
-    public class CompanyRepository 
-        : BaseRepository<Company>, CompanyRepositoryContract
+    public class CompanyRepository
+        : BaseRepository<Company>,
+        CompanyRepositoryContract
     {
         public CompanyRepository(ISession session) : base(session)
         {
         }
 
-        public Task<CompanyList> Get(CompanyList companyList)
+        public Task<Company> Get(object[] id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<Company> Get(string cnpj)
+        public Task<CompanyList> Get(CompanyList companyList)
         {
             throw new NotImplementedException();
         }
