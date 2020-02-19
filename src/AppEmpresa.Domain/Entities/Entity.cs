@@ -3,13 +3,15 @@ using System;
 
 namespace AppEmpresa.Domain.Entities
 {
-    public class Entity : EventNotificationEntity
+    public abstract class Entity : EventNotificationEntity
     {
         public Entity()
         {
             this.CreateDate = DateTime.Now;
         }
 
-        public DateTime CreateDate { get; set; }
+        public virtual DateTime CreateDate { get; set; }
+
+        public abstract object[] ChavePrimaria { get; }
     }
 }

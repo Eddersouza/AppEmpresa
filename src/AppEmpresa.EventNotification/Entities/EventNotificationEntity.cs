@@ -2,9 +2,9 @@
 {
     public class EventNotificationEntity
     {
-        public EventNotification EventNotification { get; } = new EventNotification();
+        public virtual EventNotification EventNotification { get; } = new EventNotification();
 
-        public bool IsValid()
+        public virtual bool IsValid()
         {
             return !EventNotification.HasErrors
                 && !EventNotification.HasWarnings

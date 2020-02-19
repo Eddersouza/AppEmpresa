@@ -33,7 +33,7 @@ namespace AppEmpresa.App.Services
                 return company;
 
             }
-            catch
+            catch(Exception ex)
             {
                 _unityOfWork.Rowback();
 

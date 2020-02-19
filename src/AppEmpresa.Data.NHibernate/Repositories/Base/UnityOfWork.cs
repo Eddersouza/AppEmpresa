@@ -23,7 +23,7 @@ namespace AppEmpresa.Data.NHibernate.Repositories.Base
 
         public void BeginTransaction()
         {
-            _session.BeginTransaction();
+            _transaction = _session.BeginTransaction();
         }
 
         public void Commit()

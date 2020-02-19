@@ -41,21 +41,26 @@ namespace AppEmpresa.Domain.Entities
             State = state;
         }
 
-        public string CNPJ { get; set; }
-        public string CompanyName { get; set; }
+        public virtual string CNPJ { get; set; }
+        public virtual string CompanyName { get; set; }
         public virtual State? State { get; set; }
-        public string StateCode
+        public virtual string StateCode
         {
             get { return State.GetCode(); }
             set { State = value.GetEnumByCode<State>(Enums.State.EscolhaUmEstado); }
         }
 
-        public void ValidateDeleteCompany()
+        public override object[] ChavePrimaria
+        {
+            get { return new object[] { CNPJ }; }
+        }
+
+        public virtual void ValidateDeleteCompany()
         {
             TestCondition(CNPJ.IsNullOrEmpty(), CnpjRequired);
         }
 
-        public void ValidateNewOrUpdateCompany()
+        public virtual void ValidateNewOrUpdateCompany()
         {
             TestCondition(CNPJ.IsNullOrEmpty(), CnpjRequired);
             TestCondition(!CNPJ.IsCnpj(), CnpjInvalid);

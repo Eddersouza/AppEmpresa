@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using AppEmpresa.EventNotification.Entities;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace AppEmpresa.Domain.Entities
 {
-    public class CompanyList : Entity
+    public class CompanyList : EventNotificationEntity
     {
         private IList<Company> _itens;
 
@@ -19,6 +20,7 @@ namespace AppEmpresa.Domain.Entities
         }
 
         public IReadOnlyCollection<Company> Itens { get { return new ReadOnlyCollection<Company>(_itens); } }
+                
 
         public void AddList(
                     IList<Company> itens)
