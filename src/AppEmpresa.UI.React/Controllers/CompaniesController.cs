@@ -23,11 +23,13 @@ namespace AppEmpresa.UI.React.Controllers
         }
 
         [HttpGet]
-        public async  Task<IActionResult> Get()
+        public async Task<IActionResult> Get()
         {
             Company company = new Company("10793548000190", "Company Name", State.SantaCatarina);
-            
-            company = await _companyApp.Create(company);
+
+            //company = await _companyApp.Create(company);
+
+            var teste = await _companyApp.Get(company.CNPJ);
 
             return Ok(company);
         }

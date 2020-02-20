@@ -8,7 +8,6 @@ namespace AppEmpresa.Tests
     {
         public UnityOfWorkContract Resolve()
         {
-            CompanyRepositoryContract companyRepository;
             MockCompanyRepository repository = new MockCompanyRepository();
 
             UnityOfWorkContract unityOfWork = new MockUnitOfWork(repository.CreateCompanyRepository());
