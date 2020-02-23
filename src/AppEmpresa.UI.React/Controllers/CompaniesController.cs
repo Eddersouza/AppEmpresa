@@ -47,7 +47,7 @@ namespace AppEmpresa.UI.React.Controllers
         [HttpGet("{cnpj}")]
         public async Task<IActionResult> Get(string cnpj)
         {
-            var company = await _companyApp.Get(cnpj);
+            Company company = await _companyApp.Get(cnpj);
 
             GetCompanyResponseView view = new GetCompanyResponseView(
                 _mapper.Map<CompanyView>(company),
