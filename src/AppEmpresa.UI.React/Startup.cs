@@ -1,4 +1,5 @@
 ﻿using AppEmpresa.DI;
+using AppEmpresa.UI.React.AutomapperConfig;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,8 @@ namespace AppEmpresa.UI.React
 
             services.ConfigureAppEmpresaServicesApp();
             services.ConfigureAppEmpresaServicesRepositories();
+
+            services.AutomapperServicesAdd();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

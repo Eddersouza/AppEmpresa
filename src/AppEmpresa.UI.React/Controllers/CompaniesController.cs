@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 using AppEmpresa.Domain.Contracts.Apps;
 using AppEmpresa.Domain.Entities;
 using AppEmpresa.Domain.Enums;
+using AppEmpresa.UI.React.ViewModels.Api.Response.Companies;
+using AppEmpresa.UI.React.ViewModels.Companies;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +20,15 @@ namespace AppEmpresa.UI.React.Controllers
     public class CompaniesController : ControllerBase
     {
         private readonly CompanyAppContract _companyApp;
-        public CompaniesController(CompanyAppContract companyApp)
+
+        private readonly IMapper _mapper;
+
+        public CompaniesController(
+            CompanyAppContract companyApp,
+            IMapper mapper)
         {
             _companyApp = companyApp;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -29,16 +38,29 @@ namespace AppEmpresa.UI.React.Controllers
 
             //company = await _companyApp.Create(company);
 
-            var teste = await _companyApp.Get(company.CNPJ);
+            //var teste = await _companyApp.Get(company.CNPJ);
 
             return Ok(company);
         }
 
         // GET: api/Companies/5
         [HttpGet("{cnpj}")]
-        public string Get(string cnpj)
+        public async Task<IActionResult> Get(string cnpj)
         {
-            return "value";
+            var company = await _companyApp.Get(cnpj);
+
+            GetCompanyResponseView view = new GetCompanyResponseView(
+                _mapper.Map<CompanyView>(company),
+                company.EventNotification);
+
+            if (company.EventNotification.HasWarnings)
+                return StatusCode(400, company);
+
+            if (company.EventNotification.HasErrors)
+                return StatusCode(500, company);
+
+
+            return Ok(view);
         }
 
         // POST: api/Companies

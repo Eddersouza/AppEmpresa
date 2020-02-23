@@ -31,9 +31,8 @@ namespace AppEmpresa.App.Services
                 _unityOfWork.Commit();
 
                 return company;
-
             }
-            catch (Exception ex)
+            catch
             {
                 _unityOfWork.Rowback();
 
@@ -43,7 +42,6 @@ namespace AppEmpresa.App.Services
 
                 return company;
             }
-
         }
 
         public async Task<Company> Delete(Company company)
@@ -70,7 +68,7 @@ namespace AppEmpresa.App.Services
 
                 return company;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _unityOfWork.Rowback();
 
@@ -85,13 +83,44 @@ namespace AppEmpresa.App.Services
         public async Task<CompanyList> Get()
         {
             CompanyList companyList = new CompanyList();
-            return await _unityOfWork.Companies.Get(companyList);
+
+            try
+            {
+                companyList = await _unityOfWork.Companies.Get(companyList);
+
+                return companyList;
+            }
+            catch
+            {
+                _unityOfWork.Rowback();
+
+                companyList.EventNotification.Add(new EventNotificationDescription(
+                    "Ocorreu um erro ao Buscar Empresa.",
+                    new EventNotificationError()));
+
+                return companyList;
+            }
         }
 
         public async Task<Company> Get(string cnpj)
         {
             Company company = new Company(cnpj, string.Empty, null);
-            return await _unityOfWork.Companies.Get(company.PrimaryKeys);
+
+            try
+            {
+                company = await _unityOfWork.Companies.Get(company.PrimaryKeys);
+                return company;
+            }
+            catch
+            {
+                _unityOfWork.Rowback();
+
+                company.EventNotification.Add(new EventNotificationDescription(
+                    "Ocorreu um erro ao Buscar Empresa.",
+                    new EventNotificationError()));
+
+                return company;
+            }
         }
 
         public async Task<Company> Update(Company company)
@@ -117,7 +146,6 @@ namespace AppEmpresa.App.Services
                 _unityOfWork.Commit();
 
                 return company;
-
             }
             catch
             {
