@@ -1,4 +1,6 @@
-﻿namespace AppEmpresa.Utils.Extensions
+﻿using System;
+
+namespace AppEmpresa.Utils.Extensions
 {
     public static class StringExtensions
     {
@@ -51,6 +53,23 @@
         public static bool IsNullOrEmpty(this string value)
         {
             return string.IsNullOrEmpty(value);
+        }
+
+        public static T GetEnumByCode<T>(
+           this string value,
+           Enum defaultEnum) where T : Enum
+        {
+            Type type = typeof(T);
+
+            foreach (T itemEnum in type.GetEnumValues())
+            {
+                string temtEnum = itemEnum.GetCode();
+
+                if (value == temtEnum)
+                    return itemEnum;
+            }
+
+            return (T)defaultEnum;
         }
     }
 }

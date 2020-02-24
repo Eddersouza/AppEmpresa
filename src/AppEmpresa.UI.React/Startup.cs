@@ -25,6 +25,7 @@ namespace AppEmpresa.UI.React
             services.ConfigureHibernate(_configuration);
 
             services.ConfigureAppEmpresaServicesApp();
+            services.ConfigureAppEmpresaServices();
             services.ConfigureAppEmpresaServicesRepositories();
 
             services.AutomapperServicesAdd();

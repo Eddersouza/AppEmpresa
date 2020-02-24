@@ -1,8 +1,10 @@
 ﻿using AppEmpresa.App.Services;
 using AppEmpresa.Domain.Contracts.Apps;
 using AppEmpresa.Domain.Contracts.Repositories.Base;
+using AppEmpresa.Domain.Contracts.Services;
 using AppEmpresa.Domain.Entities;
 using AppEmpresa.Domain.Enums;
+using AppEmpresa.Domain.Services;
 using NUnit.Framework;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,7 +18,9 @@ namespace AppEmpresa.Tests
         {
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
-            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
+            CompanyServiceContract companyService = new CompanyService(unityOfWork);
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork, companyService);
+
             Company company = new Company("10793548000190", "Company Name", State.Acre);
 
             //Act
@@ -32,7 +36,9 @@ namespace AppEmpresa.Tests
         {
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
-            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
+            CompanyServiceContract companyService = new CompanyService(unityOfWork);
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork, companyService);
+
             Company company = new Company("10793548000191", "Company Name", State.Acre);
 
             //Act
@@ -47,7 +53,9 @@ namespace AppEmpresa.Tests
         {
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
-            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
+            CompanyServiceContract companyService = new CompanyService(unityOfWork);
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork, companyService);
+
             Company company = new Company("10793548000190", "", State.Acre);
 
             //Act
@@ -62,7 +70,9 @@ namespace AppEmpresa.Tests
         {
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
-            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
+            CompanyServiceContract companyService = new CompanyService(unityOfWork);
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork, companyService);
+
             Company company = new Company("10793548000190", "Company Name", null);
 
             //Act
@@ -73,11 +83,30 @@ namespace AppEmpresa.Tests
         }
 
         [Test]
+        public async Task CreateCompany_AlreadExists()
+        {
+            //Arrange
+            UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
+            CompanyServiceContract companyService = new CompanyService(unityOfWork);
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork, companyService);
+
+            Company company = new Company("68522679000112", "Company Name", null);
+
+            //Act
+            company = await _companyApp.Create(company);
+
+            //Assert
+            Assert.AreEqual(true, company.EventNotification.Warnings.Select(x => x.ToString()).Contains("Empresa já Cadastrada."));
+        }
+
+        [Test]
         public async Task DeleteCompany()
         {
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
-            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
+            CompanyServiceContract companyService = new CompanyService(unityOfWork);
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork, companyService);
+
             Company company = new Company("68522679000112", "", null);
 
             //Act
@@ -93,7 +122,9 @@ namespace AppEmpresa.Tests
         {
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
-            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
+            CompanyServiceContract companyService = new CompanyService(unityOfWork);
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork, companyService);
+
             Company company = new Company("", "", null);
 
             //Act
@@ -108,7 +139,9 @@ namespace AppEmpresa.Tests
         {
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
-            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
+            CompanyServiceContract companyService = new CompanyService(unityOfWork);
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork, companyService);
+
             Company company = new Company("10793548000190", "", null);
 
             //Act
@@ -125,7 +158,9 @@ namespace AppEmpresa.Tests
             State newState = State.SantaCatarina;
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
-            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
+            CompanyServiceContract companyService = new CompanyService(unityOfWork);
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork, companyService);
+
             Company company = new Company("68522679000112", newName, newState);
 
             //Act
@@ -141,7 +176,9 @@ namespace AppEmpresa.Tests
         {
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
-            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
+            CompanyServiceContract companyService = new CompanyService(unityOfWork);
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork, companyService);
+
             Company company = new Company("10793548000190", "", State.Acre);
 
             //Act
@@ -156,7 +193,9 @@ namespace AppEmpresa.Tests
         {
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
-            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
+            CompanyServiceContract companyService = new CompanyService(unityOfWork);
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork, companyService);
+
             Company company = new Company("10793548000190", "Company Name alt", State.Acre);
 
             //Act
@@ -171,7 +210,9 @@ namespace AppEmpresa.Tests
         {
             //Arrange
             UnityOfWorkContract unityOfWork = new ResolveMock().Resolve();
-            CompanyAppContract _companyApp = new CompanyApp(unityOfWork);
+            CompanyServiceContract companyService = new CompanyService(unityOfWork);
+            CompanyAppContract _companyApp = new CompanyApp(unityOfWork, companyService);
+
             Company company = new Company("10793548000190", "Company Name", null);
 
             //Act

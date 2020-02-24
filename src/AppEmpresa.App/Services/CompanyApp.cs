@@ -1,5 +1,6 @@
 ﻿using AppEmpresa.Domain.Contracts.Apps;
 using AppEmpresa.Domain.Contracts.Repositories.Base;
+using AppEmpresa.Domain.Contracts.Services;
 using AppEmpresa.Domain.Entities;
 using AppEmpresa.EventNotification.Entities;
 using AppEmpresa.EventNotification.Entities.Levels;
@@ -11,10 +12,14 @@ namespace AppEmpresa.App.Services
     public class CompanyApp : CompanyAppContract
     {
         private readonly UnityOfWorkContract _unityOfWork;
+        private readonly CompanyServiceContract _companyService;
 
-        public CompanyApp(UnityOfWorkContract unityOfWork)
+        public CompanyApp(
+            UnityOfWorkContract unityOfWork,
+            CompanyServiceContract companyService)
         {
             _unityOfWork = unityOfWork;
+            _companyService = companyService;
         }
 
         public async Task<Company> Create(Company company)
@@ -22,6 +27,8 @@ namespace AppEmpresa.App.Services
             try
             {
                 company.ValidateNewOrUpdateCompany();
+
+                await _companyService.CanCreateNewCompany(company);
 
                 if (!company.IsValid())
                     return company;
@@ -68,7 +75,7 @@ namespace AppEmpresa.App.Services
 
                 return company;
             }
-            catch (Exception ex)
+            catch
             {
                 _unityOfWork.Rowback();
 

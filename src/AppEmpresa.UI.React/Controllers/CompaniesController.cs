@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 using AppEmpresa.Domain.Contracts.Apps;
 using AppEmpresa.Domain.Entities;
 using AppEmpresa.Domain.Enums;
+using AppEmpresa.UI.React.ViewModels.Api.Request.Companies;
 using AppEmpresa.UI.React.ViewModels.Api.Response.Companies;
 using AppEmpresa.UI.React.ViewModels.Companies;
+using AppEmpresa.Utils.Extensions;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -63,10 +65,24 @@ namespace AppEmpresa.UI.React.Controllers
             return Ok(view);
         }
 
-        // POST: api/Companies
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] CreateNewCompanyView view)
         {
+            Company company = new Company(view.CNPJ, view.CompanyName, view.StateCode.GetEnumByCode<State>(null));
+
+            company = await _companyApp.Create(company);
+
+            CreateCompanyResponseView viewResult = new CreateCompanyResponseView(
+                _mapper.Map<CompanyView>(company),
+                company.EventNotification);
+
+            if (company.EventNotification.HasWarnings)
+                return StatusCode(400, viewResult);
+
+            if (company.EventNotification.HasErrors)
+                return StatusCode(500, viewResult);
+
+            return StatusCode(201, viewResult);
         }
 
         // PUT: api/Companies/5
