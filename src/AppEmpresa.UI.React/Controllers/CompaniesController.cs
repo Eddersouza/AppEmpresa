@@ -45,7 +45,6 @@ namespace AppEmpresa.UI.React.Controllers
             return Ok(company);
         }
 
-        // GET: api/Companies/5
         [HttpGet("{cnpj}")]
         public async Task<IActionResult> Get(string cnpj)
         {
