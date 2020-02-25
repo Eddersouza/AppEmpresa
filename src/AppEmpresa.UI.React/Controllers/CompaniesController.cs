@@ -34,10 +34,10 @@ namespace AppEmpresa.UI.React.Controllers
         public async Task<IActionResult> Delete(string cnpj = null)
         {
             Company company = new Company(cnpj, string.Empty, null);
-            
+
             company = await _companyApp.Delete(company);
 
-            CreateCompanyResponseView viewResult = new CreateCompanyResponseView(
+            DeleteCompanyResponseView viewResult = new DeleteCompanyResponseView(
                 _mapper.Map<CompanyView>(company),
                 company.EventNotification);
 
@@ -117,7 +117,7 @@ namespace AppEmpresa.UI.React.Controllers
             if (cnpjIsEquals)
                 company = await _companyApp.Update(company);
 
-            CreateCompanyResponseView viewResult = new CreateCompanyResponseView(
+            UpdateCompanyResponseView viewResult = new UpdateCompanyResponseView(
                 _mapper.Map<CompanyView>(company),
                 company.EventNotification);
 

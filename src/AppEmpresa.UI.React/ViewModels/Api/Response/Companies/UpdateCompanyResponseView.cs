@@ -2,9 +2,9 @@
 
 namespace AppEmpresa.UI.React.ViewModels.Api.Response.Companies
 {
-    public class CreateCompanyResponseView : BaseCompanyResponseView
+    public class UpdateCompanyResponseView : BaseCompanyResponseView
     {
-        public CreateCompanyResponseView(
+        public UpdateCompanyResponseView(
             CompanyView companyView,
             EventNotification.Entities.EventNotification eventNotification) : base(companyView, eventNotification)
         {
