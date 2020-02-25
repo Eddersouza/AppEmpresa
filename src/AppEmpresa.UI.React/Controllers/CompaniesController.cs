@@ -92,10 +92,30 @@ namespace AppEmpresa.UI.React.Controllers
             return StatusCode(201, viewResult);
         }
 
-        // PUT: api/Companies/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] UpdateNewCompanyView view)
+        [HttpPut("{cnpj}")]
+        public async Task<IActionResult> Put(string cnpj, [FromBody] UpdateNewCompanyView view)
         {
+            Company company = new Company(view.CNPJ, view.CompanyName, view.StateCode.GetEnumByCode<State>(null));
+
+            bool cnpjIsEquals = cnpj == company.CNPJ;
+
+            if (cnpjIsEquals)
+                company = await _companyApp.Update(company);
+
+            CreateCompanyResponseView viewResult = new CreateCompanyResponseView(
+                _mapper.Map<CompanyView>(company),
+                company.EventNotification);
+
+            if (!cnpjIsEquals)
+                viewResult.AddWarning("CNPJ com erro. Verifique o CNPJ e os dados Enviados.");
+
+            if (company.EventNotification.HasWarnings)
+                return StatusCode(400, viewResult);
+
+            if (company.EventNotification.HasErrors)
+                return StatusCode(500, viewResult);
+
+            return StatusCode(201, viewResult);
         }
     }
 }

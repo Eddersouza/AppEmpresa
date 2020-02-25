@@ -148,13 +148,13 @@ namespace AppEmpresa.App.Services
 
                 _unityOfWork.BeginTransaction();
                 await _unityOfWork.Companies.Update(company);
+                _unityOfWork.Commit();
 
                 company = await _unityOfWork.Companies.Get(company.PrimaryKeys);
-                _unityOfWork.Commit();
 
                 return company;
             }
-            catch
+            catch (Exception ex)
             {
                 _unityOfWork.Rowback();
 
