@@ -38,7 +38,7 @@ namespace AppEmpresa.Domain.Entities
         {
             CNPJ = cnpj;
             CompanyName = companyName;
-            State = state;
+            State = state ?? Enums.State.EscolhaUmEstado;
         }
 
         public virtual string CNPJ { get; set; }

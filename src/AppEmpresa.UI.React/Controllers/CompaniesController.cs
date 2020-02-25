@@ -30,10 +30,25 @@ namespace AppEmpresa.UI.React.Controllers
             _mapper = mapper;
         }
 
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{cnpj?}")]
+        public async Task<IActionResult> Delete(string cnpj = null)
         {
+            Company company = new Company(cnpj, string.Empty, null);
+            
+            company = await _companyApp.Delete(company);
+
+            CreateCompanyResponseView viewResult = new CreateCompanyResponseView(
+                _mapper.Map<CompanyView>(company),
+                company.EventNotification);
+
+            if (company.EventNotification.HasWarnings)
+                return StatusCode(400, viewResult);
+
+            if (company.EventNotification.HasErrors)
+                return StatusCode(500, viewResult);
+
+            return StatusCode(200, viewResult);
+
         }
 
         [HttpGet]
@@ -101,7 +116,6 @@ namespace AppEmpresa.UI.React.Controllers
 
             if (cnpjIsEquals)
                 company = await _companyApp.Update(company);
-            else { }
 
             CreateCompanyResponseView viewResult = new CreateCompanyResponseView(
                 _mapper.Map<CompanyView>(company),

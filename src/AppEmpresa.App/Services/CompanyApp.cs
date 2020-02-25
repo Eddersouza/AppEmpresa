@@ -60,9 +60,9 @@ namespace AppEmpresa.App.Services
                 if (!company.IsValid())
                     return company;
 
-                _unityOfWork.BeginTransaction();
-
                 Company companyToDelete = await _unityOfWork.Companies.Get(company.PrimaryKeys);
+
+                _unityOfWork.BeginTransaction();
 
                 if (companyToDelete == null)
                     company.EventNotification.Add(new EventNotificationDescription(
@@ -82,7 +82,7 @@ namespace AppEmpresa.App.Services
                 company.EventNotification.Add(new EventNotificationDescription(
                     "Ocorreu um erro ao Excluir Empresa.",
                     new EventNotificationError()));
-
+                throw;
                 return company;
             }
         }
