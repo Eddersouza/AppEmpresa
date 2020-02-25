@@ -101,13 +101,17 @@ namespace AppEmpresa.UI.React.Controllers
 
             if (cnpjIsEquals)
                 company = await _companyApp.Update(company);
+            else { }
 
             CreateCompanyResponseView viewResult = new CreateCompanyResponseView(
                 _mapper.Map<CompanyView>(company),
                 company.EventNotification);
 
             if (!cnpjIsEquals)
+            {
                 viewResult.AddWarning("CNPJ com erro. Verifique o CNPJ e os dados Enviados.");
+                return StatusCode(204, viewResult);
+            }
 
             if (company.EventNotification.HasWarnings)
                 return StatusCode(400, viewResult);
