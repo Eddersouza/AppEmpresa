@@ -20,10 +20,10 @@ namespace AppEmpresa.Domain.Entities
         }
 
         public IReadOnlyCollection<Company> Itens { get { return new ReadOnlyCollection<Company>(_itens); } }
-                
+
 
         public void AddList(
-                    IList<Company> itens)
+            IList<Company> itens)
         {
             _itens = itens;
         }

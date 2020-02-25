@@ -3,7 +3,6 @@ using AppEmpresa.Domain.Contracts.Repositories;
 using AppEmpresa.Domain.Entities;
 using Dapper;
 using NHibernate;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,7 +27,7 @@ namespace AppEmpresa.Data.NHibernate.Repositories
         {
         }
 
-        public Task<Company> Get(object[] id)
+        public async Task<Company> Get(object[] id)
         {
             StringBuilder query = new StringBuilder();
             Dictionary<string, object> queryParams = new Dictionary<string, object>();
@@ -44,12 +43,23 @@ namespace AppEmpresa.Data.NHibernate.Repositories
                 query.AppendFormat(" WHERE {0}", string.Join(" AND ", whereParams));
 
             var connection = _session.Connection;
-            return connection.QueryFirstOrDefaultAsync<Company>(query.ToString(), queryParams);
+            return await connection.QueryFirstOrDefaultAsync<Company>(query.ToString(), queryParams);
         }
 
-        public Task<CompanyList> Get(CompanyList companyList)
+        public async Task<CompanyList> Get(CompanyList companyList)
         {
-            throw new NotImplementedException();
+            StringBuilder query = new StringBuilder();
+            Dictionary<string, object> queryParams = new Dictionary<string, object>();
+            List<string> whereParams = new List<string>();
+
+            query.Append(sqlQueryBase);
+
+            var connection = _session.Connection;
+            var list = await connection.QueryAsync<Company>(query.ToString());
+
+            companyList.AddList(list.AsList());
+
+            return companyList;
         }
     }
 }

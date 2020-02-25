@@ -9,6 +9,7 @@ namespace AppEmpresa.UI.React.AutomapperConfig
         public DomainToViewModelMappingProfile()
         {
             CreateMap<Company, CompanyView>();
+            CreateMap<CompanyList, CompaniesView>();
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
-using System.Threading.Tasks;
-using AppEmpresa.Domain.Contracts.Apps;
+﻿using AppEmpresa.Domain.Contracts.Apps;
 using AppEmpresa.Domain.Entities;
 using AppEmpresa.Domain.Enums;
 using AppEmpresa.UI.React.ViewModels.Api.Request.Companies;
@@ -11,8 +6,10 @@ using AppEmpresa.UI.React.ViewModels.Api.Response.Companies;
 using AppEmpresa.UI.React.ViewModels.Companies;
 using AppEmpresa.Utils.Extensions;
 using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Net.Mime;
+using System.Threading.Tasks;
 
 namespace AppEmpresa.UI.React.Controllers
 {
@@ -33,16 +30,28 @@ namespace AppEmpresa.UI.React.Controllers
             _mapper = mapper;
         }
 
+        // DELETE: api/ApiWithActions/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
+
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            Company company = new Company("10793548000190", "Company Name", State.SantaCatarina);
+            CompanyList companyList = await _companyApp.Get();
 
-            //company = await _companyApp.Create(company);
+            GetCompaniesResponseView view = new GetCompaniesResponseView(
+                new CompaniesView(_mapper.Map<IList<CompanyView>>(companyList.Itens)),
+                companyList.EventNotification);
 
-            //var teste = await _companyApp.Get(company.CNPJ);
+            if (companyList.EventNotification.HasWarnings)
+                return StatusCode(400, view);
 
-            return Ok(company);
+            if (companyList.EventNotification.HasErrors)
+                return StatusCode(500, view);
+
+            return Ok(view);
         }
 
         [HttpGet("{cnpj}")]
@@ -55,11 +64,10 @@ namespace AppEmpresa.UI.React.Controllers
                 company.EventNotification);
 
             if (company.EventNotification.HasWarnings)
-                return StatusCode(400, company);
+                return StatusCode(400, view);
 
             if (company.EventNotification.HasErrors)
-                return StatusCode(500, company);
-
+                return StatusCode(500, view);
 
             return Ok(view);
         }
@@ -86,13 +94,7 @@ namespace AppEmpresa.UI.React.Controllers
 
         // PUT: api/Companies/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        public void Put(int id, [FromBody] UpdateNewCompanyView view)
         {
         }
     }
