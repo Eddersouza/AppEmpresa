@@ -17,18 +17,6 @@ const useStyles = makeStyles({
     }
 });
 
-function createData(cnpj, companyName, stateDescription) {
-    return { cnpj, companyName, stateDescription };
-}
-
-const rows = [
-    createData('23.217.580/0001-79', 'Empresa Santa Catarina', 'Santa Catarina'),
-    createData('17.973.206/0001-09', 'Empresa Paraná', 'Paraná'),
-    createData('66.047.520/0001-68', 'Empresa São Paulo', 'São Paulo'),
-    createData('29.432.037/0001-70', 'Empresa Rio de Janeiro', 'Rio de Janeiro'),
-    createData('82.011.059/0001-40', 'Empresa Espirito Santo', 'Espirito Santo')
-];
-
 const CompaniesList = (props) => {
     const classes = useStyles();
 
@@ -44,7 +32,7 @@ const CompaniesList = (props) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map(row => (
+                    {props.companies.map(row => (
                         <TableRow key={row.cnpj}>
                             <TableCell>{row.cnpj}</TableCell>
                             <TableCell>{row.companyName}</TableCell>
