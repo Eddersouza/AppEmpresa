@@ -5,6 +5,8 @@ import Breadcrumbs from '@material-ui/core/Breadcrumbs';
 import HomeIcon from '@material-ui/icons/Home';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
+import { Link as RouterLink } from 'react-router-dom';
+
 const useStyles = makeStyles(() => ({
     ink: {
         display: 'flex',
@@ -16,6 +18,8 @@ const useStyles = makeStyles(() => ({
     },
 }));
 
+const LinkRouter = props => <Link {...props} component={RouterLink} />;
+
 const Beadcrumb = (props) => {
     const classes = useStyles();
 
@@ -24,16 +28,15 @@ const Beadcrumb = (props) => {
             {props.data.map((value, index) => {
                 const last = index === props.data.length - 1;
                 const fisrt = index === 0;
-
-                return last ? (
+                return last && !fisrt ? (
                     <Typography color="textPrimary" key={value}>
                         {value.title}
                     </Typography>
                 ) : (
-                        <Link href={value.link} color="inherit" className={classes.link}>
-                            {fisrt ? <HomeIcon className={classes.icon} /> : null}
+                        <LinkRouter color="inherit" to={value.link} key={value.title} className={classes.link}>
+                            {fisrt ? <HomeIcon className={classes.icon} /> : 'null'}
                             {value.title}
-                        </Link>
+                        </LinkRouter>
                     );
 
             })}
