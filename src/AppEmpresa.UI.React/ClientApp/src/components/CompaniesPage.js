@@ -1,5 +1,6 @@
 import React from 'react';
 import Beadcrumb from './Beadcrumb';
+import CompaniesList from './CompaniesList';
 
 const CompaniesPage = () => {
     const beadcrumb = [
@@ -17,7 +18,10 @@ const CompaniesPage = () => {
         <>
             <br />
             <Beadcrumb data={beadcrumb} />
-            Empresas
+            <br />
+            <h2>Empresas:</h2>
+            <br />
+            <CompaniesList />
         </>
     );
 };
