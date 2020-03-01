@@ -1,11 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/styles';
-import Breadcrumbs from '@material-ui/core/Breadcrumbs';
-import Grid from '@material-ui/core/Grid';
-
 import CardTotal from './CardTotal';
-import Link from '@material-ui/core/Link';
-import HomeIcon from '@material-ui/icons/Home';
+import Grid from '@material-ui/core/Grid';
+import Beadcrumb from './Beadcrumb';
+
 const useStyles = makeStyles(() => ({
     ink: {
         display: 'flex',
@@ -19,17 +17,17 @@ const useStyles = makeStyles(() => ({
 
 function Home(props) {
     const classes = useStyles();
+    const beadcrumb = [
+        {
+            title: 'App Empresa',
+            link: '/'
+        }
+    ];
 
     return (
         <div>
-            <div>
-                <Breadcrumbs aria-label="breadcrumb">
-                    <Link color="inherit" href="/" className={classes.link}>
-                        <HomeIcon className={classes.icon} />
-                        App Empresas
-                    </Link>
-                </Breadcrumbs>
-            </div>
+            <br />
+            <Beadcrumb data={beadcrumb} />
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
                     <CardTotal title="Empresas" quantity="15" />
