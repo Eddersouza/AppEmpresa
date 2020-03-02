@@ -42,7 +42,6 @@ const useStyles = makeStyles(theme => ({
 function LayoutApp(props) {
   const classes = useStyles();
 
-  const preventDefault = event => event.preventDefault();
   return (
     <>
       <div className={classes.root}>

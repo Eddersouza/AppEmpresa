@@ -1,21 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import Button from '@material-ui/core/Button';
+import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
+import Grid from '@material-ui/core/Grid';
+
 import Beadcrumb from './Beadcrumb';
 import CompaniesList from './CompaniesList';
 
-function createData(cnpj, companyName, stateDescription) {
-    return { cnpj, companyName, stateDescription };
-}
+const companiesList = [];
 
-const companiesList = [
-    // createData('23.217.580/0001-79', 'Empresa Santa Catarina', 'Santa Catarina'),
-    // createData('17.973.206/0001-09', 'Empresa Paraná', 'Paraná'),
-    // createData('66.047.520/0001-68', 'Empresa São Paulo', 'São Paulo'),
-    // createData('29.432.037/0001-70', 'Empresa Rio de Janeiro', 'Rio de Janeiro'),
-    // createData('82.011.059/0001-40', 'Empresa Espirito Santo', 'Espirito Santo')
-];
-
-
-const CompaniesPage = () => {
+const CompaniesPage = (props) => {
     const [companies, setcompanies] = useState(companiesList);
 
     const beadcrumb = [
@@ -29,9 +22,13 @@ const CompaniesPage = () => {
         }
     ];
 
+    const goToCompany = () => {
+        props.history.push('/empresa')
+    }
+
     async function getCompanies() {
         let response = await fetch("api/empresas")
-       
+
         let data = await response.json();
 
         return data;
@@ -50,7 +47,23 @@ const CompaniesPage = () => {
             <br />
             <Beadcrumb data={beadcrumb} />
             <br />
-            <h2>Empresas:</h2>
+            <h2>
+                <Grid container spacing={3}>
+                    <Grid item xs={12} sm={8}>
+                        Empresas:
+                </Grid>
+                    <Grid item xs={12} sm={4} align='center'>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            startIcon={<AddToPhotosIcon />}
+                            onClick={goToCompany}
+                        >
+                            Nova Empresa
+                        </Button>
+                    </Grid>
+                </Grid>
+            </h2>
             <br />
             <CompaniesList companies={companies} />
         </>

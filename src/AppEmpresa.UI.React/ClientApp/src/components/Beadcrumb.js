@@ -34,7 +34,7 @@ const Beadcrumb = (props) => {
                     </Typography>
                 ) : (
                         <LinkRouter color="inherit" to={value.link} key={value.title} className={classes.link}>
-                            {fisrt ? <HomeIcon className={classes.icon} /> : 'null'}
+                            {fisrt ? <HomeIcon className={classes.icon} /> : null}
                             {value.title}
                         </LinkRouter>
                     );
