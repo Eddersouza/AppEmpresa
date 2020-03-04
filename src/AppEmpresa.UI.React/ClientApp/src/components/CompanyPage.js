@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,18 +11,6 @@ import BlockIcon from '@material-ui/icons/Block';
 import ClearIcon from '@material-ui/icons/Clear';
 
 import Beadcrumb from './Beadcrumb';
-
-function createState(code, stateName) {
-    return { code, stateName };
-}
-
-const states = [
-    createState("SC", "Santa Catarina"),
-    createState("PR", "Paraná"),
-    createState("RS", "Rio Grande do Sul"),
-    createState("SP", "São Paulo"),
-    createState("RJ", "Rio de Janeiro")
-];
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -55,10 +43,29 @@ const beadcrumb = [
 
 const CompanyPage = () => {
     const [selectedState, setselectedState] = useState('');
+    const [states, setstates] = useState([])
     const classes = useStyles();
+
+    async function getStates() {
+        let response = await fetch("api/parametros/estados")
+
+        let data = await response.json();
+
+        return data;
+    }
+
     const handleChange = event => {
         setselectedState(event.target.value);
     };
+
+    useEffect(() => {
+        getStates()
+            .then(res => {
+                setstates(res.data.items)
+            })
+            .catch((error) => console.log(error))
+    }, [setstates]);
+
     return (
         <>
             <br />
@@ -87,7 +94,7 @@ const CompanyPage = () => {
                             >
                                 <option value="" />
                                 {states.map((value, index) => {
-                                    return (<option key={value.code} value={value.code}>{value.stateName}</option>)
+                                    return (<option key={value.code} value={value.code}>{value.name}</option>)
                                 })}
                             </Select>
                         </FormControl>
