@@ -42,8 +42,12 @@ const beadcrumb = [
 ];
 
 const CompanyPage = () => {
+    const [states, setstates] = useState([]);
+    const [cnpjValue, setcnpjValue] = useState('');
+    const [companyNameValue, setcompanyNameValue] = useState('');
+
     const [selectedState, setselectedState] = useState('');
-    const [states, setstates] = useState([])
+
     const classes = useStyles();
 
     async function getStates() {
@@ -54,9 +58,9 @@ const CompanyPage = () => {
         return data;
     }
 
-    const handleChange = event => {
-        setselectedState(event.target.value);
-    };
+    const handleStateChange = event => setselectedState(event.target.value);
+    const handleCNPJChange = event => setcnpjValue(event.target.value);
+    const handleCompanyNameChange = event => setcompanyNameValue(event.target.value);
 
     useEffect(() => {
         getStates()
@@ -77,7 +81,11 @@ const CompanyPage = () => {
                 <Grid container spacing={6}>
                     <Grid item xs={12} sm={6}>
                         <FormControl fullWidth className={classes.formControl}>
-                            <TextField fullWidth id="txtCnpj" label="CNPJ" />
+                            <TextField fullWidth
+                                id="txtCnpj"
+                                label="CNPJ"
+                                value={cnpjValue}
+                                onChange={handleCNPJChange} />
                         </FormControl>
                     </Grid>
                     <Grid item xs={12} sm={6}>
@@ -86,7 +94,7 @@ const CompanyPage = () => {
                             <Select
                                 native
                                 value={selectedState}
-                                onChange={handleChange}
+                                onChange={handleStateChange}
                                 inputProps={{
                                     name: 'selSelectedState',
                                     id: 'age-native-simple',
@@ -103,7 +111,11 @@ const CompanyPage = () => {
                 <Grid container spacing={5}>
                     <Grid item xs={12} sm={12}>
                         <FormControl fullWidth className={classes.formControl}>
-                            <TextField fullWidth id="txtCompanyName" label="Nome da Empresa" />
+                            <TextField fullWidth
+                                id="txtCompanyName"
+                                label="Nome da Empresa"
+                                value={companyNameValue}
+                                onChange={handleCompanyNameChange} />
                         </FormControl>
                     </Grid>
                 </Grid>
