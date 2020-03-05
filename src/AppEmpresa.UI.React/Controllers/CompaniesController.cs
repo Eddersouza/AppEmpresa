@@ -90,7 +90,7 @@ namespace AppEmpresa.UI.React.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateNewCompanyView view)
         {
-            Company company = new Company(view.CNPJ, view.CompanyName, view.StateCode.GetEnumByCode<State>(null));
+            Company company = new Company(view.CNPJ, view.CompanyName, view.StateCode.GetEnumByCode<State>(State.EscolhaUmEstado));
 
             company = await _companyApp.Create(company);
 

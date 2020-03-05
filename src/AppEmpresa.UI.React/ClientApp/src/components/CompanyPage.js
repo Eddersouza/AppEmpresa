@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
 import BlockIcon from '@material-ui/icons/Block';
 import ClearIcon from '@material-ui/icons/Clear';
+import axios from 'axios';
 
 import Beadcrumb from './Beadcrumb';
 
@@ -50,16 +51,23 @@ const CompanyPage = (props) => {
 
     const classes = useStyles();
 
+    function createCompanyDataObject(CNPJ, CompanyName, StateCode) {
+        return { CNPJ, CompanyName, StateCode };
+    }
+
     async function getStates() {
-        let response = await fetch("api/parametros/estados")
+        let response = await axios.get("api/parametros/estados")
 
-        let data = await response.json();
+        return response.data;
+    }
 
-        return data;
+    function gotoCompaniesPage() {
+        props.history.push('/empresas');
     }
 
     const handleCancelClick = () => props.history.push('/empresas');
     const handleClearClick = event => {
+        console.log("teste")
         setcnpjValue('');
         setcompanyNameValue('');
         setselectedState('');
@@ -67,6 +75,18 @@ const CompanyPage = (props) => {
     const handleCNPJChange = event => setcnpjValue(event.target.value);
     const handleCompanyNameChange = event => setcompanyNameValue(event.target.value);
     const handleStateChange = event => setselectedState(event.target.value);
+    const handleCreateCompanyClick = gotoCompanies => {
+        let companyData = createCompanyDataObject(cnpjValue, companyNameValue, selectedState);
+
+        axios.post('/api/empresas', companyData)
+            .then(res => {
+                //setstates(res.data.items)
+                if (gotoCompanies)
+                    gotoCompaniesPage()
+            })
+            .catch((error) => console.log(error))
+
+    };
 
 
     useEffect(() => {
@@ -151,12 +171,14 @@ const CompanyPage = (props) => {
                             color="primary"
                             className={classes.button}
                             startIcon={<SaveIcon />}
+                            onClick={() => handleCreateCompanyClick(false)}
                         >Salvar e continuar na Página</Button>
                         <Button
                             variant="contained"
                             color="primary"
                             className={classes.button}
                             startIcon={<SaveIcon />}
+                            onClick={() => handleCreateCompanyClick(true)}
                         >Salvar</Button>
                     </Grid>
                 </Grid>
