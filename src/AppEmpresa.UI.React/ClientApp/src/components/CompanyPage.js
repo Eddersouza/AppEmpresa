@@ -41,7 +41,7 @@ const beadcrumb = [
     }
 ];
 
-const CompanyPage = () => {
+const CompanyPage = (props) => {
     const [states, setstates] = useState([]);
     const [cnpjValue, setcnpjValue] = useState('');
     const [companyNameValue, setcompanyNameValue] = useState('');
@@ -58,9 +58,10 @@ const CompanyPage = () => {
         return data;
     }
 
-    const handleStateChange = event => setselectedState(event.target.value);
+    const handleCancelClick = () => props.history.push('/empresas');
     const handleCNPJChange = event => setcnpjValue(event.target.value);
     const handleCompanyNameChange = event => setcompanyNameValue(event.target.value);
+    const handleStateChange = event => setselectedState(event.target.value);
 
     useEffect(() => {
         getStates()
@@ -131,12 +132,19 @@ const CompanyPage = () => {
                             color="secondary"
                             className={classes.button}
                             startIcon={<BlockIcon />}
+                            onClick={handleCancelClick}
                         >Cancelar</Button>
                         <Button
                             variant="contained"
                             className={classes.button}
                             startIcon={<ClearIcon />}
                         >Limpar</Button>
+                        <Button
+                            variant="outlined"
+                            color="primary"
+                            className={classes.button}
+                            startIcon={<SaveIcon />}
+                        >Salvar e continuar na Página</Button>
                         <Button
                             variant="contained"
                             color="primary"
