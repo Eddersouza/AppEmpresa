@@ -59,9 +59,15 @@ const CompanyPage = (props) => {
     }
 
     const handleCancelClick = () => props.history.push('/empresas');
+    const handleClearClick = event => {
+        setcnpjValue('');
+        setcompanyNameValue('');
+        setselectedState('');
+    };
     const handleCNPJChange = event => setcnpjValue(event.target.value);
     const handleCompanyNameChange = event => setcompanyNameValue(event.target.value);
     const handleStateChange = event => setselectedState(event.target.value);
+
 
     useEffect(() => {
         getStates()
@@ -138,6 +144,7 @@ const CompanyPage = (props) => {
                             variant="contained"
                             className={classes.button}
                             startIcon={<ClearIcon />}
+                            onClick={handleClearClick}
                         >Limpar</Button>
                         <Button
                             variant="outlined"
