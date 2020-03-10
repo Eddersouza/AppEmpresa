@@ -12,6 +12,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import axios from 'axios';
 
 import Beadcrumb from './Beadcrumb';
+import SnackbarAppEmpresa from './Shared/SnackbarAppEmpresa';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -49,6 +50,8 @@ const CompanyPage = (props) => {
 
     const [selectedState, setselectedState] = useState('');
 
+    const [responseView, setResponseView] = useState({})
+
     const classes = useStyles();
 
     function createCompanyDataObject(CNPJ, CompanyName, StateCode) {
@@ -67,7 +70,6 @@ const CompanyPage = (props) => {
 
     const handleCancelClick = () => props.history.push('/empresas');
     const handleClearClick = event => {
-        console.log("teste")
         setcnpjValue('');
         setcompanyNameValue('');
         setselectedState('');
@@ -75,19 +77,23 @@ const CompanyPage = (props) => {
     const handleCNPJChange = event => setcnpjValue(event.target.value);
     const handleCompanyNameChange = event => setcompanyNameValue(event.target.value);
     const handleStateChange = event => setselectedState(event.target.value);
+
     const handleCreateCompanyClick = gotoCompanies => {
         let companyData = createCompanyDataObject(cnpjValue, companyNameValue, selectedState);
 
         axios.post('/api/empresas', companyData)
             .then(res => {
                 //setstates(res.data.items)
+
+                console.log(res)
                 if (gotoCompanies)
                     gotoCompaniesPage()
             })
-            .catch((error) => console.log(error))
+            .catch(error => {
+                console.log(error.response)
+            })
 
     };
-
 
     useEffect(() => {
         getStates()
@@ -183,6 +189,7 @@ const CompanyPage = (props) => {
                     </Grid>
                 </Grid>
             </form>
+            <SnackbarAppEmpresa open="true" response={responseView} />
         </>
     );
 };
