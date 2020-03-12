@@ -13,7 +13,7 @@ import axios from 'axios';
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-import { LaunchErrorResponse } from './Shared/CustomToast.js'
+import { LaunchErrorResponse, LaunchSucessResponse } from './Shared/CustomToast.js'
 
 import Beadcrumb from './Beadcrumb';
 
@@ -59,12 +59,6 @@ const CompanyPage = (props) => {
         return { CNPJ, CompanyName, StateCode };
     }
 
-    async function getStates() {
-        let response = await axios.get("api/parametros/estados")
-
-        return response.data;
-    }
-
     function gotoCompaniesPage() {
         props.history.push('/empresas');
     }
@@ -85,10 +79,11 @@ const CompanyPage = (props) => {
 
         axios.post('/api/empresas', companyData)
             .then(res => {
-                //setstates(res.data.items)
+
+                LaunchSucessResponse('Estado cadastrado com sucesso.');
 
                 if (gotoCompanies)
-                    gotoCompaniesPage()
+                    gotoCompaniesPage();
             })
             .catch(error => {
                 LaunchErrorResponse(error.response)
@@ -97,9 +92,9 @@ const CompanyPage = (props) => {
     };
 
     useEffect(() => {
-        getStates()
+        axios.get("api/parametros/estados")
             .then(res => {
-                setstates(res.data.items)
+                setstates(res.data.data.items)
             })
             .catch((error) => console.log(error))
     }, [setstates]);
