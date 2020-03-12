@@ -10,9 +10,12 @@ import SaveIcon from '@material-ui/icons/Save';
 import BlockIcon from '@material-ui/icons/Block';
 import ClearIcon from '@material-ui/icons/Clear';
 import axios from 'axios';
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
+import { LaunchErrorResponse } from './Shared/CustomToast.js'
 
 import Beadcrumb from './Beadcrumb';
-import SnackbarAppEmpresa from './Shared/SnackbarAppEmpresa';
 
 const useStyles = makeStyles(theme => ({
     formControl: {
@@ -50,8 +53,6 @@ const CompanyPage = (props) => {
 
     const [selectedState, setselectedState] = useState('');
 
-    const [responseView, setResponseView] = useState({})
-
     const classes = useStyles();
 
     function createCompanyDataObject(CNPJ, CompanyName, StateCode) {
@@ -74,6 +75,7 @@ const CompanyPage = (props) => {
         setcompanyNameValue('');
         setselectedState('');
     };
+
     const handleCNPJChange = event => setcnpjValue(event.target.value);
     const handleCompanyNameChange = event => setcompanyNameValue(event.target.value);
     const handleStateChange = event => setselectedState(event.target.value);
@@ -85,12 +87,11 @@ const CompanyPage = (props) => {
             .then(res => {
                 //setstates(res.data.items)
 
-                console.log(res)
                 if (gotoCompanies)
                     gotoCompaniesPage()
             })
             .catch(error => {
-                console.log(error.response)
+                LaunchErrorResponse(error.response)
             })
 
     };
@@ -109,7 +110,6 @@ const CompanyPage = (props) => {
             <Beadcrumb data={beadcrumb} />
             <br />
             <h2>Nova Empresa:</h2>
-
             <form noValidate autoComplete="off">
                 <Grid container spacing={6}>
                     <Grid item xs={12} sm={6}>
@@ -189,7 +189,7 @@ const CompanyPage = (props) => {
                     </Grid>
                 </Grid>
             </form>
-            <SnackbarAppEmpresa open="true" response={responseView} />
+            <ToastContainer />
         </>
     );
 };
