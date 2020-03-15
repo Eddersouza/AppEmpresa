@@ -12,7 +12,7 @@ import ClearIcon from '@material-ui/icons/Clear';
 import axios from 'axios';
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-
+import { useParams } from "react-router-dom";
 import { LaunchErrorResponse, LaunchSucessResponse } from './Shared/CustomToast.js'
 
 import Beadcrumb from './Beadcrumb';
@@ -55,8 +55,20 @@ const CompanyPage = (props) => {
 
     const classes = useStyles();
 
+    let { cnpj } = useParams();
+
     function createCompanyDataObject(CNPJ, CompanyName, StateCode) {
         return { CNPJ, CompanyName, StateCode };
+    }
+
+    const getStates = () => {
+        axios.get("api/parametros/estados")
+            .then(res => {
+                setstates(res.data.data.items)
+            })
+            .catch((error) => LaunchErrorResponse(error.response))
+
+        return;
     }
 
     function gotoCompaniesPage() {
@@ -72,32 +84,58 @@ const CompanyPage = (props) => {
 
     const handleCNPJChange = event => setcnpjValue(event.target.value);
     const handleCompanyNameChange = event => setcompanyNameValue(event.target.value);
-    const handleStateChange = event => setselectedState(event.target.value);
+    const handleStateChange = event => {
+        console.log(event.target.value)
+        setselectedState(event.target.value);
+    }
 
     const handleCreateCompanyClick = gotoCompanies => {
         let companyData = createCompanyDataObject(cnpjValue, companyNameValue, selectedState);
+        let action = null;
+        if (cnpj) {
+            console.log("put")
+            action = axios.put('/api/empresas/' + cnpj, companyData);
+        }
+        else {
+            console.log("post")
+            action = axios.post('/api/empresas', companyData);
+        }
 
-        axios.post('/api/empresas', companyData)
-            .then(res => {
+        action.then(res => {
 
-                LaunchSucessResponse('Estado cadastrado com sucesso.');
+            LaunchSucessResponse('Estado cadastrado com sucesso.');
 
-                if (gotoCompanies)
-                    gotoCompaniesPage();
-            })
+            if (gotoCompanies)
+                gotoCompaniesPage();
+        })
             .catch(error => {
-                LaunchErrorResponse(error.response)
+                console.log(error.response)
+
+                LaunchErrorResponse(error.response);
             })
 
     };
 
+    const populatePage = () => {
+        if (cnpj) {
+            axios.get('/api/empresas/' + cnpj)
+                .then(res => {
+                    let company = res.data.data;
+                    setcnpjValue(company.cnpj);
+                    setcompanyNameValue(company.companyName);
+                    setselectedState(company.stateCode);
+                    console.log(company);
+                })
+                .catch(error => {
+                    LaunchErrorResponse(error.response)
+                })
+        }
+    }
+
     useEffect(() => {
-        axios.get("api/parametros/estados")
-            .then(res => {
-                setstates(res.data.data.items)
-            })
-            .catch((error) => console.log(error))
-    }, [setstates]);
+        getStates();
+        populatePage();
+    }, []);
 
     return (
         <>

@@ -23,7 +23,7 @@ const CompaniesPage = (props) => {
     ];
 
     const goToCompany = () => {
-        props.history.push('/empresa')
+        props.history.push('/empresa/nova')
     }
 
     async function getCompanies() {

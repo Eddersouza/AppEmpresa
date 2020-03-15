@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Route } from 'react-router';
+import { Route, Switch } from 'react-router';
 import LayoutApp from './components/Layout';
 import Home from './components/Home';
 import CompaniesPage from './components/CompaniesPage';
@@ -9,10 +9,12 @@ import CompanyPage from './components/CompanyPage';
 function App() {
   return (
     <LayoutApp>
-      <Route exact path='/' component={Home} />
-      <Route path='/empresas' component={CompaniesPage} />
-      <Route path='/empresa' component={CompanyPage} />
-      {/*<Route path='/fetch-data' component={FetchData} /> */}
+      <Switch>
+        <Route exact path='/' component={Home} />
+        <Route path='/empresas' component={CompaniesPage} />
+        <Route path='/empresa/nova' component={CompanyPage} />
+        <Route path='/empresa/:cnpj' component={CompanyPage} />
+      </Switch>
     </LayoutApp>
   );
 }

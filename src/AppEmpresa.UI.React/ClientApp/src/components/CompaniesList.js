@@ -7,6 +7,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import EditIcon from '@material-ui/icons/Edit';
+import { useHistory} from "react-router-dom";
 
 const useStyles = makeStyles({
     table: {
@@ -19,6 +22,12 @@ const useStyles = makeStyles({
 
 const CompaniesList = (props) => {
     const classes = useStyles();
+    const history = useHistory();
+    
+    const goEditCompanyPage = (cnpj) => {
+        let path = '/empresa/' + cnpj;
+        history.push(path)
+    }
 
     return (
         <TableContainer component={Paper}>
@@ -37,7 +46,16 @@ const CompaniesList = (props) => {
                             <TableCell>{row.cnpj}</TableCell>
                             <TableCell>{row.companyName}</TableCell>
                             <TableCell>{row.stateDescription}</TableCell>
-                            <TableCell>&nbsp;</TableCell>
+                            <TableCell>
+                                <Button
+                                    color="primary"
+                                    onClick={() => goEditCompanyPage(row.cnpj)}
+                                    title={'Editar ' + row.companyName}
+                                    variant="outlined"
+                                >
+                                    <EditIcon />
+                                </Button>
+                            </TableCell>
                         </TableRow>
                     ))}
                 </TableBody>
