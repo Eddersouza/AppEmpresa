@@ -13,6 +13,8 @@ const Msg = ({ closeToast }) => (
 )
 
 export function LaunchErrorResponse(response) {
+
+    console.log(response)
     if (response.status === 400)
         ToastWarning(response.data.warningMessages);
     else

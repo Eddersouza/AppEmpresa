@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
 import Grid from '@material-ui/core/Grid';
+import axios from 'axios';
+import { LaunchErrorResponse } from './Shared/CustomToast.js'
 
 import Beadcrumb from './Beadcrumb';
 import CompaniesList from './CompaniesList';
@@ -26,21 +28,19 @@ const CompaniesPage = (props) => {
         props.history.push('/empresa/nova')
     }
 
-    async function getCompanies() {
-        let response = await fetch("api/empresas")
-
-        let data = await response.json();
-
-        return data;
+    function getCompanies() {
+        axios.get("api/empresas")
+            .then(res => {                
+                setcompanies(res.data.data.items);
+            })
+            .catch((error) =>  {                
+                LaunchErrorResponse(error.response)
+            })
     }
 
     useEffect(() => {
-        getCompanies()
-            .then(res => {
-                setcompanies(res.data.items)
-            })
-            .catch((error) => console.log(error))
-    }, [setcompanies]);
+        getCompanies();
+    }, []);
 
     return (
         <>
