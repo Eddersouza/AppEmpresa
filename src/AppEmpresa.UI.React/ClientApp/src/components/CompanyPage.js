@@ -102,7 +102,6 @@ const CompanyPage = (props) => {
         }
 
         action.then(res => {
-
             LaunchSucessResponse('Estado cadastrado com sucesso.');
 
             if (gotoCompanies)
@@ -147,7 +146,7 @@ const CompanyPage = (props) => {
                 <Grid container spacing={6}>
                     <Grid item xs={12} sm={6}>
                         <FormControl fullWidth className={classes.formControl}>
-                            <TextField fullWidth
+                            <TextField fullWidth autoFocus
                                 id="txtCnpj"
                                 label="CNPJ"
                                 value={cnpjValue}

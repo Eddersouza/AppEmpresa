@@ -16,7 +16,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { useHistory } from "react-router-dom";
-
+import { LaunchErrorResponse, LaunchSucessResponse } from './Shared/CustomToast.js'
+import axios from 'axios';
 const useStyles = makeStyles({
     table: {
         width: "100%",
@@ -32,6 +33,20 @@ const CompaniesList = (props) => {
     const [selectedCompany, setSelectedCompany] = useState({});
     const classes = useStyles();
     const history = useHistory();
+
+    const deleteCompany = (cnpj) => {
+        let action = axios.delete('/api/empresas/' + cnpj);
+
+        action.then(res => {
+            LaunchSucessResponse('Empresa excluída com sucesso.');
+            props.getCompanies();
+            setOpenDialogDelete(false);
+        })
+            .catch(error => {
+                setOpenDialogDelete(false);
+                LaunchErrorResponse(error.response);
+            });
+    }
 
     const goEditCompanyPage = (cnpj) => {
         let path = '/empresa/' + cnpj;
@@ -56,7 +71,7 @@ const CompaniesList = (props) => {
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
             >
-                <DialogTitle id="alert-dialog-title">{"Comfirme a Exclusão"}</DialogTitle>
+                <DialogTitle id="alert-dialog-title">{"Confirme a Exclusão"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
                         Deseja excluir a empresa <br />
@@ -64,10 +79,10 @@ const CompaniesList = (props) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleCloseDialogDelete} color="primary">
+                    <Button onClick={handleCloseDialogDelete} color="secondary">
                         Cancelar
                     </Button>
-                    <Button onClick={handleCloseDialogDelete} color="primary" autoFocus>
+                    <Button onClick={() => deleteCompany(selectedCompany.cnpj)} color="primary">
                         Excluir
                     </Button>
                 </DialogActions>

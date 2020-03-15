@@ -30,10 +30,10 @@ const CompaniesPage = (props) => {
 
     function getCompanies() {
         axios.get("api/empresas")
-            .then(res => {                
+            .then(res => {
                 setcompanies(res.data.data.items);
             })
-            .catch((error) =>  {                
+            .catch((error) => {
                 LaunchErrorResponse(error.response)
             })
     }
@@ -65,7 +65,7 @@ const CompaniesPage = (props) => {
                 </Grid>
             </h2>
             <br />
-            <CompaniesList companies={companies} />
+            <CompaniesList companies={companies} getCompanies={getCompanies} />
         </>
     );
 };
